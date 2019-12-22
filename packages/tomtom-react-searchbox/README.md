@@ -10,7 +10,7 @@ npm i --save tomtom-react-searchbox
 
 ## Usage
 
-```
+```jsx
 import React from 'react'
 import TomtomReactSearchbox from 'tomtom-react-searchbox';
 
