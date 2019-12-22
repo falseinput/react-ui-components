@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/falseinput/react-ui-components/issues"
   },
-  "homepage": "https://github.com/falseinput/react-ui-components#readme"
+  "homepage": "https://github.com/falseinput/react-ui-components#readme",
+  "dependencies": {
+    "dotenv": "8.2.0"
+  }
 }

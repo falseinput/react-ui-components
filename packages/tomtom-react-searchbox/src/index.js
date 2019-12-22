@@ -31,13 +31,17 @@ function SearchWithAutoComplete(props) {
             setSearchResults(results);
             setResultsVisible(true);
         } else {
+            setResultsVisible(false);
             setSearchResults(null);
         }
     }
 
     function onResultSelect(results) {
         setInput(results.formattedResult);
-        props.onResultChoose(results.result);
+
+        if (props.onResultChoose) {
+            props.onResultChoose(results.result);
+        }
     }
 
     const [selectedItemIndex, setSelectedItemIndex] = React.useState(-1);
@@ -84,7 +88,13 @@ function SearchWithAutoComplete(props) {
 
 
     React.useEffect(() => {
-        if (selectedItemIndex > -1) {
+        if (!resultsVisible) {
+            setSelectedItemIndex(-1);
+        }
+    }, [resultsVisible]);
+
+    React.useEffect(() => {
+        if (props.onResultSelect && selectedItemIndex > -1) {
             props.onResultSelect(searchResults.results[selectedItemIndex]);
         }
     }, [selectedItemIndex]);

@@ -1,7 +1,5 @@
 import React from 'react';
 import './App.scss';
-
-
 import SearchWithAutoComplete from 'tomtom-react-searchbox';
 
 function App() {
@@ -17,7 +15,7 @@ function App() {
           ];
         }}
         searchOptions={{
-          key: '<api-key>',
+          key: process.env.REACT_APP_TOMTOM_SEARCH_API_KEY,
           language: 'en-Gb',
           limit: 5
         }} />
