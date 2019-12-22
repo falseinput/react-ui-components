@@ -1,0 +1,22 @@
+{
+  "name": "react-ui-components",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {
+    "lerna": "^3.19.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/falseinput/react-ui-components.git"
+  },
+  "author": "Zbigniew Matysek (falseinput)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/falseinput/react-ui-components/issues"
+  },
+  "homepage": "https://github.com/falseinput/react-ui-components#readme"
+}
