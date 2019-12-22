@@ -100,8 +100,8 @@ function SearchWithAutoComplete(props) {
     }, [selectedItemIndex]);
 
     React.useEffect(() => {
-        if (props.onResultsFetched && searchResults !== null) {
-            props.onResultsFetched(searchResults);
+        if (props.onResultsFetch && searchResults !== null) {
+            props.onResultsFetch(searchResults);
         }
     }, [searchResults])
 
@@ -139,7 +139,7 @@ SearchWithAutoComplete.propTypes = {
     inputElements: PropTypes.func,
     onResultSelect: PropTypes.func,
     onResultChoose: PropTypes.func,
-    onResultsFetched: PropTypes.func
+    onResultsFetch: PropTypes.func
 };
 
 export default SearchWithAutoComplete;
