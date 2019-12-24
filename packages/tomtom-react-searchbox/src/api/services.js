@@ -2,32 +2,28 @@ import pick from 'lodash.pick';
 
 const createQueryParams = (params) => {
     return Object.entries(params).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
-}
+};
 
 const requester = async (url) => {
-    try {
-        const response = await fetch(url);
+    const response = await fetch(url);
 
-        if (!response.ok) {
-            throw response;
-        }
-
-        return response.json();
-    } catch(error) {
-        throw error;
+    if (!response.ok) {
+        throw response;
     }
-}
+
+    return response.json();
+};
 
 const getCommonParams = (options) => {
     return pick(options, ['key', 'language', 'lat', 'lon', 'radius', 'countrySet']);
-}
+};
 
 const getAutocompleteParams = (options) => {
     const common = getCommonParams(options);
     const autocompleteOnly = options.resultSet ? { resultSet: options.resultSet } : {};
 
     return { ...common, ...autocompleteOnly };
-}
+};
 
 const getSearchParams = (options) => {
     const common = getCommonParams(options);
@@ -47,7 +43,7 @@ const getSearchParams = (options) => {
         'connectorSet',
         'openingHours',
         'timeZone',
-        'mapcodes'
+        'mapcodes',
     ]);
 
     if ('topLeft' in searchOnly || 'btmRight' in searchOnly) {
@@ -55,18 +51,18 @@ const getSearchParams = (options) => {
     }
 
     return { ...common, ...searchOnly };
-}
+};
 
-export const autoCompleteService = function(options) {
+export const autoCompleteService = (options) => {
     const queryParams = createQueryParams(getAutocompleteParams(options));
     const url = `https://api.tomtom.com/search/2/autocomplete/${encodeURIComponent(options.query)}.json?${queryParams}`;
 
     return requester(url);
-}
+};
 
-export const fuzzySearchService = function(options) {
+export const fuzzySearchService = (options) => {
     const queryParams = createQueryParams(getSearchParams(options));
     const url = `https://api.tomtom.com/search/2/search/${encodeURIComponent(options.query)}.json?${queryParams}`;
 
     return requester(url);
-}
+};

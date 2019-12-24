@@ -7,13 +7,6 @@ function App() {
     <div className="App">
       <SearchWithAutoComplete
         minNumbOfChars={3}
-        placeholder="Custom placeholder"
-        inputElements={(props) => {
-          return [
-            <a href="fds" onClick={e => e.preventDefault()}>Buka</a>,
-            <div onClick={props.onClear}>Clear right</div>
-          ];
-        }}
         searchOptions={{
           key: process.env.REACT_APP_TOMTOM_SEARCH_API_KEY,
           language: 'en-Gb',

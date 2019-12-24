@@ -1,6 +1,4 @@
-export const getId = (result) => {
-    return result.id;
-}
+export const getId = (result) => result.id;
 
 export const getPoiName = (result) => {
     if (result.poi !== undefined && typeof result.poi.name !== 'undefined') {
@@ -20,6 +18,4 @@ export const getAddress = (result) => {
     return address.join(', ');
 };
 
-export const getFormattedResult = (result) => {
-    return [getPoiName(result), getAddress(result)].filter(value => value.length).join(', ');
-};
+export const getFormattedResult = (result) => [getPoiName(result), getAddress(result)].filter((value) => value.length).join(', ');

@@ -1,35 +1,47 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-import { KEY_CODES } from './keyCodes';
+import KEY_CODES from './keyCodes';
 
 const onKeyDown = (event) => {
     if (event.keyCode === KEY_CODES.ARROW_UP) {
-         event.preventDefault()
+        event.preventDefault();
     }
 };
 
-function SearchInput(props) {
+function SearchInput({
+    value,
+    inputClassName,
+    inputElements,
+    placeholder,
+    onFocus,
+    onBlur,
+    onChange,
+    onClear,
+    inputWidthCallback,
+}) {
     const inputContainerRef = React.useRef(null);
 
     React.useEffect(() => {
         const width = inputContainerRef.current.offsetWidth;
-        props.inputWidthCallback(width);
+        inputWidthCallback(width);
     }, []);
     return (
         <div
-            className={props.inputClassName}
-            ref={inputContainerRef}>
-            {props.inputElements && props.inputElements({onClear: props.onClear})[0]}
+            className={inputClassName}
+            ref={inputContainerRef}
+        >
+            {inputElements && inputElements({ onClear })[0]}
             <input
-                placeholder={props.placeholder || ''}
+                placeholder={placeholder}
                 type="text"
-                onFocus={props.onFocus}
+                onFocus={onFocus}
                 onKeyDown={onKeyDown}
-                onBlur={props.onBlur}
-                value={props.value}
-                onChange={(event) => props.onChange(event.target.value)} />
-            {props.inputElements && props.inputElements({onClear: props.onClear})[1]}
+                onBlur={onBlur}
+                value={value}
+                onChange={(event) => onChange(event.target.value)}
+            />
+            {inputElements && inputElements({ onClear })[1]}
         </div>
     );
 }
@@ -37,10 +49,19 @@ function SearchInput(props) {
 SearchInput.propTypes = {
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string.isRequired,
-    placeholder: PropTypes.string,
-    inputClassName: PropTypes.string,
     onFocus: PropTypes.func.isRequired,
     onClear: PropTypes.func.isRequired,
+    onBlur: PropTypes.func.isRequired,
+    inputWidthCallback: PropTypes.func.isRequired,
+    inputElements: PropTypes.func,
+    placeholder: PropTypes.string,
+    inputClassName: PropTypes.string,
+};
+
+SearchInput.defaultProps = {
+    inputElements: null,
+    placeholder: '',
+    inputClassName: null,
 };
 
 export default SearchInput;
