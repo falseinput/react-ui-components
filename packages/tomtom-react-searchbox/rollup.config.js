@@ -1,6 +1,8 @@
 const babel = require('rollup-plugin-babel');
 const resolve = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
+const postcss = require('rollup-plugin-postcss');
+const postcssNested = require('postcss-nested');
 
 const globals = {
     'prop-types': 'PropTypes',
@@ -20,5 +22,11 @@ export default {
         babel({ exclude: ['node_modules/**'], runtimeHelpers: false }),
         resolve(),
         commonjs(),
+        postcss({
+            plugins: [
+                postcssNested,
+            ],
+            extract: true,
+        }),
     ],
 };

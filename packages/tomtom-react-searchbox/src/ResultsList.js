@@ -26,6 +26,7 @@ function ResultsList({
                     resultParts = (
                         <>
                             <div className="search-with-autocomplete__result-item -primary">{`${poiName} `}</div>
+                            <br />
                             <div className="search-with-autocomplete__result-item -secondary">{address}</div>
                         </>
                     );

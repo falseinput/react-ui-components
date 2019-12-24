@@ -1,3 +1,5 @@
+@import "tomtom-react-searchbox";
+
 .App {
   text-align: center;
 }
@@ -19,44 +21,4 @@
 
 .App-link {
   color: #09d3ac;
-}
-
-
-.search-with-autocomplete {
-  text-align: left;
-  display: inline-block;
-}
-.search-with-autocomplete__results {
-  .search-with-autocomplete {
-    &__result {
-      font-size: 14px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      padding: 8px;
-
-      &:hover,
-      &:focus,
-      &.-selected {
-        background-color: #eeeeee;
-        cursor: pointer;
-      }
-
-      & > * {
-        display: inline;
-      }
-
-    }
-
-    &__result-item {
-      &.-primary {
-        color: #353535;
-        font-weight: bold;
-      }
-      &.-secondary {
-        color: #7f7f7f;
-      }
-    }
-  }
-
 }

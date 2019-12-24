@@ -1,0 +1,37 @@
+
+.search-with-autocomplete {
+    text-align: left;
+    display: inline-block;
+
+    &__results {
+        .search-with-autocomplete {
+            &__result {
+                font-size: 14px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                padding: 8px;
+
+                &:hover,
+                &.-selected {
+                background-color: #eeeeee;
+                cursor: pointer;
+                }
+
+                & > * {
+                display: inline;
+                }
+            }
+
+            &__result-item {
+                &.-primary {
+                color: #353535;
+                font-weight: bold;
+                }
+                &.-secondary {
+                color: #7f7f7f;
+                }
+            }
+        }
+    }
+}

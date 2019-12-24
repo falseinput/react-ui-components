@@ -7,6 +7,8 @@ import * as formatters from './formatters';
 import KEY_CODES from './keyCodes';
 import { fuzzySearchService } from './api/services';
 
+import './style.css';
+
 const callTriggerCondition = (minNumbOfChars, value) => {
     if (minNumbOfChars) {
         return value.length >= minNumbOfChars;
