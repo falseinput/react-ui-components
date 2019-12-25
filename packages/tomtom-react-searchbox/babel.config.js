@@ -1,12 +1,22 @@
-const presets = ['@babel/preset-react', [
-    '@babel/preset-env',
-    {
-        modules: false,
-        useBuiltIns: 'usage',
-        corejs: '3.6.0',
-    }],
-];
+module.exports = (api) => {
+    const babelPresetOptions = !api.env('test')
+        ? {
+            modules: false,
+            useBuiltIns: 'usage',
+            corejs: '3.6.0',
+        } : {
+            targets: {
+                node: 'current',
+            },
+        };
 
-module.exports = {
-    presets,
+
+    const presets = ['@babel/preset-react', [
+        '@babel/preset-env',
+        babelPresetOptions,
+    ]];
+
+    return {
+        presets,
+    };
 };
