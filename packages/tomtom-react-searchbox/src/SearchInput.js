@@ -11,7 +11,6 @@ const onKeyDown = (event) => {
 
 function SearchInput({
     value,
-    inputClassName,
     inputElements,
     placeholder,
     onFocus,
@@ -28,13 +27,14 @@ function SearchInput({
     }, []);
     return (
         <div
-            className={inputClassName}
+            className="tomtom-react-searchbox__input-wrapper"
             ref={inputContainerRef}
         >
             {inputElements && inputElements({ onClear })[0]}
             <input
                 placeholder={placeholder}
                 type="text"
+                className="tomtom-react-searchbox__input"
                 onFocus={onFocus}
                 onKeyDown={onKeyDown}
                 onBlur={onBlur}

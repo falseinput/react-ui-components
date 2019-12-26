@@ -36,7 +36,26 @@ function Example() {
 | searchOptions      | Object          | Search options. Full list of available keys and values can be found [here](https://developer.tomtom.com/search-api/search-api-documentation-search/fuzzy-search).                                                               |
 | [minNumbOfChars=3] | Number          | Minimum number of characters which will trigger API call.                                                  |
 | [placeholder]      | String          | Input's placeholder.                                                                                       |
+| [wrapperClassName] | String          | Class name passed to the container div.                                                                    |
 | [inputElements]    | Function<Array> | Function injecting elements around input. It must return an array of length of 2 with React elements as values. For example: `[<div>Left</div>, <div>Right</div>]`. First element is placed on the left side of input, while sencond one on the right.      |
 | [onResultSelect]   | Function        | Called when result is selected (by using arrow keys). Argument of this function is selected result data.   |
 | [onResultChoose]   | Function        | Called when result is chosen (by clicking on pressing enter while one of the results is selected). Argument of this function is choosen result data.                                                                                                            |
 | [onResultsFetch]   | Function        | Called every time API call data is fetched. Argument of this function is api results object.               |
+
+
+## Styling
+
+Use `wrapperClassName` prop to pass custom class name to container div. Then you can override css classes. The structure looks like this:
+
+```html
+    <div class="tomtom-react-searchbox">
+        <div class="tomtom-react-searchbox__input-wrapper">
+            <input class="tomtom-react-searchbox__input" />
+        </div>
+        <div class="tomtom-react-searchbox__results">
+            <div class="tomtom-react-searchbox__result"></div>
+            <div class="tomtom-react-searchbox__result"></div>
+            ...
+        </div>
+    </div>
+```

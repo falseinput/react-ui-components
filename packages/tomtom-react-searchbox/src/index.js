@@ -108,17 +108,17 @@ function SearchWithAutoComplete(props) {
     }, [searchResults]);
 
 
-    const { placeholder, inputElements } = props;
+    const { placeholder, inputElements, wrapperClassName } = props;
     return (
         <div
-            className="search-with-autocomplete"
+            className={['tomtom-react-searchbox', wrapperClassName].join(' ')}
             ref={containerRef}
             onKeyDown={(event) => { event.persist(); setKeyDownEvent(event) }}>
             <SearchInput
                 value={input}
-                onBlur={() => setResultsVisible(false)}
                 placeholder={placeholder}
                 inputElements={inputElements}
+                onBlur={() => setResultsVisible(false)}
                 inputWidthCallback={(width) => setInputWidth(width)}
                 onFocus={() => setResultsVisible(true)}
                 onClear={() => setInput('')}
@@ -141,6 +141,7 @@ SearchWithAutoComplete.propTypes = {
     searchOptions: PropTypes.objectOf(PropTypes.any).isRequired,
     minNumbOfChars: PropTypes.number,
     placeholder: PropTypes.string,
+    wrapperClassName: PropTypes.string,
     inputElements: PropTypes.func,
     onResultSelect: PropTypes.func,
     onResultChoose: PropTypes.func,
@@ -150,6 +151,7 @@ SearchWithAutoComplete.propTypes = {
 SearchWithAutoComplete.defaultProps = {
     minNumbOfChars: 3,
     placeholder: '',
+    wrapperClassName: null,
     inputElements: null,
     onResultSelect: null,
     onResultChoose: null,

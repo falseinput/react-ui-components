@@ -1,10 +1,10 @@
 
-.search-with-autocomplete {
+.tomtom-react-searchbox {
     text-align: left;
     display: inline-block;
 
     &__results {
-        .search-with-autocomplete {
+        .tomtom-react-searchbox {
             &__result {
                 font-size: 14px;
                 overflow: hidden;

@@ -16,7 +16,7 @@ function ResultsList({
     };
 
     return (
-        <div className="search-with-autocomplete__results" style={{ width }}>
+        <div className="tomtom-react-searchbox__results" style={{ width }}>
             {results.results.map((result, index) => {
                 const poiName = formatters.getPoiName(result);
                 const address = formatters.getAddress(result);
@@ -25,18 +25,18 @@ function ResultsList({
                 if (poiName && address) {
                     resultParts = (
                         <>
-                            <div className="search-with-autocomplete__result-item -primary">{`${poiName} `}</div>
+                            <div className="tomtom-react-searchbox__result-item -primary">{`${poiName} `}</div>
                             <br />
-                            <div className="search-with-autocomplete__result-item -secondary">{address}</div>
+                            <div className="tomtom-react-searchbox__result-item -secondary">{address}</div>
                         </>
                     );
                 } else {
-                    resultParts = <div className="search-with-autocomplete__result-item -primary">{address}</div>;
+                    resultParts = <div className="tomtom-react-searchbox__result-item -primary">{address}</div>;
                 }
 
                 return (
                     <div
-                        className={`search-with-autocomplete__result  ${index === selectedItemIndex ? '-selected' : ''}`}
+                        className={`tomtom-react-searchbox__result  ${index === selectedItemIndex ? '-selected' : ''}`}
                         onMouseDown={(event) => event.preventDefault()}
                         onClick={() => onResultClick(result)}
                         key={formatters.getId(result)}>
