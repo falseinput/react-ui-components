@@ -9,14 +9,6 @@ import { fuzzySearchService } from './api/services';
 
 import './style.css';
 
-const callTriggerCondition = (minNumbOfChars, value) => {
-    if (minNumbOfChars) {
-        return value.length >= minNumbOfChars;
-    }
-
-    return value.length > 0;
-};
-
 function SearchWithAutoComplete(props) {
     const [input, setInput] = React.useState('');
     const [searchResults, setSearchResults] = React.useState(null);
@@ -28,7 +20,7 @@ function SearchWithAutoComplete(props) {
     async function onChange(value) {
         setInput(value);
 
-        if (callTriggerCondition(props.minNumbOfChars, value)) {
+        if (value.length >= props.minNumbOfChars) {
             const results = await fuzzySearchService({ query: value, ...props.searchOptions })
                 .catch();
             setSearchResults(results);

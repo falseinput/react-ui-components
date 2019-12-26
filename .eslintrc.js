@@ -1,5 +1,5 @@
 module.exports = {
-    "extends": "airbnb",
+    "extends": ["airbnb", "plugin:jest/recommended"],
     "rules": {
         "indent": ["error", 4],
         "react/jsx-filename-extension": [0],
