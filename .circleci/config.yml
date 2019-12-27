@@ -35,5 +35,8 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
+          name: test
+          command: 'npx lerna run test'
+      - run:
           name: build
           command: 'npx lerna run build'
