@@ -6,8 +6,10 @@
   "browser": "dist/tomtom-react-searchbox.js",
   "style": "dist/tomtom-react-searchbox.css",
   "scripts": {
-    "build": "rollup -c rollup.config.js",
-    "test": "jest"
+    "start": "rollup -c rollup.config.js --watch",
+    "build": "npm run test test && rollup -c rollup.config.js",
+    "test": "jest",
+    "coverage": "jest --coverage"
   },
   "repository": {
     "type": "git",
