@@ -1,4 +1,5 @@
 # tomtom-react-searchbox
+[![coverage](https://img.shields.io/codecov/c/github/falseinput/react-ui-components)](https://codecov.io/gh/falseinput/react-ui-components)
 
 Simple React component for searchbox with autocomplete.
 
