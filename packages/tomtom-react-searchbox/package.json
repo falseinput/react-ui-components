@@ -7,7 +7,7 @@
   "style": "dist/tomtom-react-searchbox.css",
   "scripts": {
     "start": "rollup -c rollup.config.js --watch",
-    "build": "npm run test test && rollup -c rollup.config.js",
+    "build": "rollup -c rollup.config.js",
     "test": "jest",
     "coverage": "jest --coverage"
   },
