@@ -4,11 +4,11 @@
     display: inline-block;
 
     &__results {
+        background-color: #ffffff;
         .tomtom-react-searchbox {
             &__result {
                 font-size: 14px;
                 overflow: hidden;
-                white-space: nowrap;
                 text-overflow: ellipsis;
                 padding: 8px;
 
