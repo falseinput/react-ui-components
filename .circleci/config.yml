@@ -26,8 +26,8 @@ jobs:
             - v1-dependencies-
 
       - run:
-        name: install dependencies
-        command: 'npm install && npx lerna bootstrap'
+          name: install dependencies
+          command: 'npm install && npx lerna bootstrap'
 
       - save_cache:
           paths:
@@ -35,5 +35,5 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
-        name: build
-        command: 'npx lerna run build'
+          name: build
+          command: 'npx lerna run build'
