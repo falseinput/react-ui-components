@@ -1,28 +1,67 @@
 
+
 .tomtom-react-searchbox {
+    --color-white: rgb(255, 255, 255);
+    --color-solitude: rgb(224, 235, 255);
+    --color-silver: rgb(204, 204, 204);
+    --color-dodger-blue: rgb(67, 129, 254);
+    --color-main-shaft: rgb(53, 53, 53);
+    --color-main-gray: rgb(127, 127 ,127);
+    --border: 1px solid var(--color-silver);
+    --border-radius: 4px;
+
     text-align: left;
-    display: inline-block;
+    display: block;
+
+    &__input-wrapper {
+        min-height: 38px;
+        border: var(--border);
+        border-radius: var(--border-radius);
+        padding: 2px 12px;
+        display: flex;
+        box-sizing: border-box;
+
+        &:focus-within {
+            box-shadow: inset 0 0 0 1px var(--color-dodger-blue);
+            border-color: var(--color-dodger-blue);
+        }
+    }
+
+    &__input {
+        outline: none;
+        border: none;
+        text-overflow: ellipsis;
+        width: 100%;
+    }
 
     &__clear {
         cursor: pointer;
-        fill: #7f7f7f;
+        display: flex;
+        align-items: center;
+        fill: var(--color-main-gray);
         &:hover {
-            fill: #353535;
+            fill: var(--color-main-shaft);
         }
     }
 
     &__results {
-        background-color: #ffffff;
+        background-color: var(--color-white);
+        border: var(--border);
+        border-radius: var(--border-radius);
+        margin-top: 8px;
+        padding: 4px 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        box-sizing: border-box;
+
         .tomtom-react-searchbox {
             &__result {
-                font-size: 14px;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 padding: 8px;
 
                 &:hover,
                 &.-selected {
-                background-color: #eeeeee;
+                background-color: var(--color-solitude);
                 cursor: pointer;
                 }
 
@@ -33,11 +72,11 @@
 
             &__result-item {
                 &.-primary {
-                color: #353535;
-                font-weight: bold;
+                    color: var(--color-main-shaft);
+                    font-weight: bold;
                 }
                 &.-secondary {
-                color: #7f7f7f;
+                    color: var(--color-main-gray);
                 }
             }
         }
