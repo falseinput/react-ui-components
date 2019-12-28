@@ -4,7 +4,6 @@ import {
     render,
     fireEvent,
     act,
-    wait,
 } from '@testing-library/react';
 import fetch from 'jest-fetch-mock';
 import TomtomReactSearchBox from '../src/index';
@@ -20,6 +19,18 @@ describe('TomtomReactSearchBox: props', () => {
         );
         const input = container.querySelector('input');
         expect(input).toBeTruthy();
+    });
+
+    test('should set focus on input if autofocus prop is true', async () => {
+        const { container } = render(
+            <TomtomReactSearchBox
+                autofocus
+                placeholder="Some placeholder"
+                searchOptions={{}}
+            />,
+        );
+        const input = container.querySelector('input');
+        expect(document.activeElement === input).toBe(true);
     });
 });
 

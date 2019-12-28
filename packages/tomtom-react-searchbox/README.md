@@ -34,13 +34,14 @@ function Example() {
 
 | name               | type            | Description                                                                                                                                           |
 |--------------------|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| searchOptions      | Object          | Search options. Full list of available keys and values can be found [here](https://developer.tomtom.com/search-api/search-api-documentation-search/fuzzy-search).                                                               |
-| [minNumbOfChars=3] | Number          | Minimum number of characters which will trigger API call.                                                  |
-| [placeholder]      | String          | Input's placeholder.                                                                                       |
-| [wrapperClassName] | String          | Class name passed to the container div.                                                                    |
-| [onResultSelect]   | Function        | Called when result is selected (by using arrow keys). Argument of this function is selected result data.   |
-| [onResultChoose]   | Function        | Called when result is chosen (by clicking on pressing enter while one of the results is selected). Argument of this function is choosen result data.                                                                                                            |
-| [onResultsFetch]   | Function        | Called every time API call data is fetched. Argument of this function is api results object.               |
+| searchOptions      | `Object`          | Search options. Full list of available keys and values can be found [here](https://developer.tomtom.com/search-api/search-api-documentation-search/fuzzy-search).                                                               |
+| [minNumbOfChars=`3`] | `Number`          | Minimum number of characters which will trigger API call.                                                  |
+| [placeholder=`''`]      | `String`          | Input's placeholder.                                                                                       |
+| [autofocus=`false`]      | `Boolean`          | Sets autofocus on input element.                                                                                       |
+| [wrapperClassName] | `String`          | Class name passed to the container div.                                                                    |
+| [onResultSelect]   | `Function`        | Called when result is selected (by using arrow keys). Argument of this function is selected result data.   |
+| [onResultChoose]   | `Function`        | Called when result is chosen (by clicking on pressing enter while one of the results is selected). Argument of this function is choosen result data.                                                                                                            |
+| [onResultsFetch]   | `Function`        | Called every time API call data is fetched. Argument of this function is api results object.               |
 
 
 ## Styling

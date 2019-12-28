@@ -12,8 +12,8 @@ const onKeyDown = (event) => {
 
 function SearchInput({
     value,
-    inputElements,
     placeholder,
+    autofocus,
     onFocus,
     onBlur,
     onChange,
@@ -33,6 +33,8 @@ function SearchInput({
         >
             <input
                 placeholder={placeholder}
+                // eslint-disable-next-line
+                autoFocus={autofocus}
                 type="text"
                 className="tomtom-react-searchbox__input"
                 onFocus={onFocus}
@@ -53,13 +55,7 @@ SearchInput.propTypes = {
     onClear: PropTypes.func.isRequired,
     onBlur: PropTypes.func.isRequired,
     inputWidthCallback: PropTypes.func.isRequired,
-    inputElements: PropTypes.func,
-    placeholder: PropTypes.string,
-};
-
-SearchInput.defaultProps = {
-    inputElements: null,
-    placeholder: '',
+    placeholder: PropTypes.string.isRequired,
 };
 
 export default SearchInput;
