@@ -148,12 +148,13 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
     };
     beforeEach(() => {
         fetch.resetMocks();
-        fetch.mockResponseOnce(JSON.stringify(expectedResponse));
     });
     afterEach(cleanup);
 
 
     test('should call onResultsFetch callback when results are fetched', async () => {
+        fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+
         const onResultsFetch = jest.fn();
         await act(async () => {
             const { container } = render(
@@ -169,6 +170,8 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
     });
 
     test('should call onResultChoose callback when result element is clicked', async () => {
+        fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+
         const onResultChoose = jest.fn();
         await act(async () => {
             const { container, findAllByTestId } = render(
@@ -187,6 +190,8 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
     });
 
     test('should call onResultChoose callback when result element is clicked (by pressing enter)', async () => {
+        fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+
         const onResultChoose = jest.fn();
         await act(async () => {
             const { container, findAllByTestId } = render(
@@ -206,6 +211,8 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
     });
 
     test('should call onResultSelect callback when result element is selected', async () => {
+        fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+
         const onResultSelect = jest.fn();
         await act(async () => {
             const { container, findAllByTestId } = render(
@@ -229,13 +236,13 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
     });
 
     test('should hide results list when escape is pressed', async () => {
+        fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+
         let input;
         let resultsList;
-        const onResultSelect = jest.fn();
         await act(async () => {
             const { container, findByTestId } = render(
                 <TomtomReactSearchBox
-                    onResultSelect={onResultSelect}
                     searchOptions={{}}
                 />,
             );
@@ -249,13 +256,13 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
     });
 
     test('should clear input and hide results when clear button is clicked', async () => {
+        fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+
         let input;
         let resultsList;
-        const onResultSelect = jest.fn();
         await act(async () => {
             const { container, findByTestId } = render(
                 <TomtomReactSearchBox
-                    onResultSelect={onResultSelect}
                     searchOptions={{}}
                 />,
             );
@@ -272,13 +279,13 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
     });
 
     test('should not show clear button if input is empty', async () => {
+        fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+
         let input;
         let clear;
-        const onResultSelect = jest.fn();
         await act(async () => {
             const { container, findByTestId } = render(
                 <TomtomReactSearchBox
-                    onResultSelect={onResultSelect}
                     searchOptions={{}}
                 />,
             );
@@ -294,5 +301,33 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
             fireEvent.change(input, { target: { value: '' } });
         });
         expect(clear).not.toBeInTheDocument();
+    });
+
+
+    test('should not show results if no results were returned from api', async () => {
+        const currentExpectedResponse = { results: [] };
+        fetch.mockResponseOnce(JSON.stringify(currentExpectedResponse));
+        const onResultFetch = jest.fn();
+
+        let input;
+        let resultsList;
+        await act(async () => {
+            const { container, findByTestId } = render(
+                <TomtomReactSearchBox
+                    onResultFetch={onResultFetch}
+                    searchOptions={{}}
+                />,
+            );
+
+            input = container.querySelector('input');
+            fireEvent.change(input, { target: { value: 'Some' } });
+            try {
+                resultsList = await findByTestId('results-list').catch();
+            } catch (e) {
+                // nope
+            }
+        });
+
+        expect(resultsList).toBe(undefined);
     });
 });
