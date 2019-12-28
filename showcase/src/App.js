@@ -7,6 +7,7 @@ function App() {
     <div className="App">
       <SearchWithAutoComplete
         minNumbOfChars={3}
+        autofocus={true}
         searchOptions={{
           key: process.env.REACT_APP_TOMTOM_SEARCH_API_KEY,
           language: 'en-Gb',
