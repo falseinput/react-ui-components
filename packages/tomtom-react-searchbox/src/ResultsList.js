@@ -15,6 +15,10 @@ function ResultsList({
         setResultsVisible(false);
     };
 
+    if (results.results.length === 0) {
+        return null;
+    }
+
     return (
         <div
             className="tomtom-react-searchbox__results"
