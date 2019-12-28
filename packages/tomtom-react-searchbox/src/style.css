@@ -3,6 +3,14 @@
     text-align: left;
     display: inline-block;
 
+    &__clear {
+        cursor: pointer;
+        fill: #7f7f7f;
+        &:hover {
+            fill: #353535;
+        }
+    }
+
     &__results {
         background-color: #ffffff;
         .tomtom-react-searchbox {

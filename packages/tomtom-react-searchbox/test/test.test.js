@@ -247,4 +247,52 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
         });
         expect(resultsList).not.toBeInTheDocument();
     });
+
+    test('should clear input and hide results when clear button is clicked', async () => {
+        let input;
+        let resultsList;
+        const onResultSelect = jest.fn();
+        await act(async () => {
+            const { container, findByTestId } = render(
+                <TomtomReactSearchBox
+                    onResultSelect={onResultSelect}
+                    searchOptions={{}}
+                />,
+            );
+
+            input = container.querySelector('input');
+            fireEvent.change(input, { target: { value: 'Some' } });
+            const clear = await findByTestId('clear');
+            resultsList = await findByTestId('results-list');
+            fireEvent.click(clear);
+        });
+
+        expect(input.value).toBe('');
+        expect(resultsList).not.toBeInTheDocument();
+    });
+
+    test('should not show clear button if input is empty', async () => {
+        let input;
+        let clear;
+        const onResultSelect = jest.fn();
+        await act(async () => {
+            const { container, findByTestId } = render(
+                <TomtomReactSearchBox
+                    onResultSelect={onResultSelect}
+                    searchOptions={{}}
+                />,
+            );
+
+            input = container.querySelector('input');
+            await act(async () => {
+                fireEvent.change(input, { target: { value: 'Some' } });
+            });
+            clear = await findByTestId('clear');
+        });
+        expect(clear).toBeInTheDocument();
+        await act(async () => {
+            fireEvent.change(input, { target: { value: '' } });
+        });
+        expect(clear).not.toBeInTheDocument();
+    });
 });

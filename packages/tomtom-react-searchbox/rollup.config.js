@@ -3,6 +3,7 @@ const resolve = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
 const postcss = require('rollup-plugin-postcss');
 const postcssNested = require('postcss-nested');
+const svgr = require('@svgr/rollup').default;
 
 const globals = {
     'prop-types': 'PropTypes',
@@ -28,5 +29,6 @@ export default {
             ],
             extract: true,
         }),
+        svgr(),
     ],
 };
