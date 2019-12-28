@@ -5,6 +5,8 @@
     --color-solitude: rgb(224, 235, 255);
     --color-silver: rgb(204, 204, 204);
     --color-dodger-blue: rgb(67, 129, 254);
+    --color-main-shaft: rgb(53, 53, 53);
+    --color-main-gray: rgb(127, 127 ,127);
     --border: 1px solid var(--color-silver);
     --border-radius: 4px;
 
@@ -30,6 +32,16 @@
         border: none;
         text-overflow: ellipsis;
         width: 100%;
+    }
+
+    &__clear {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        fill: var(--color-main-gray);
+        &:hover {
+            fill: var(--color-main-shaft);
+        }
     }
 
     &__results {
@@ -60,11 +72,11 @@
 
             &__result-item {
                 &.-primary {
-                    color: #353535;
+                    color: var(--color-main-shaft);
                     font-weight: bold;
                 }
                 &.-secondary {
-                    color: #7f7f7f;
+                    color: var(--color-main-gray);
                 }
             }
         }

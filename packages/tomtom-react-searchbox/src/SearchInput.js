@@ -1,6 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
+import Clear from './Clear';
 import KEY_CODES from './keyCodes';
 
 const onKeyDown = (event) => {
@@ -30,7 +31,6 @@ function SearchInput({
             className="tomtom-react-searchbox__input-wrapper"
             ref={inputContainerRef}
         >
-            {inputElements && inputElements({ onClear })[0]}
             <input
                 placeholder={placeholder}
                 type="text"
@@ -41,7 +41,7 @@ function SearchInput({
                 value={value}
                 onChange={(event) => onChange(event.target.value)}
             />
-            {inputElements && inputElements({ onClear })[1]}
+            { value && <Clear onClear={onClear} /> }
         </div>
     );
 }
@@ -55,13 +55,11 @@ SearchInput.propTypes = {
     inputWidthCallback: PropTypes.func.isRequired,
     inputElements: PropTypes.func,
     placeholder: PropTypes.string,
-    inputClassName: PropTypes.string,
 };
 
 SearchInput.defaultProps = {
     inputElements: null,
     placeholder: '',
-    inputClassName: null,
 };
 
 export default SearchInput;

@@ -121,7 +121,7 @@ function SearchWithAutoComplete(props) {
                 onBlur={() => setResultsVisible(false)}
                 inputWidthCallback={(width) => setInputWidth(width)}
                 onFocus={() => setResultsVisible(true)}
-                onClear={() => setInput('')}
+                onClear={() => { setInput(''); setSearchResults(null); }}
                 onChange={onChange}
             />
             {(searchResults && resultsVisible) && (
@@ -142,7 +142,6 @@ SearchWithAutoComplete.propTypes = {
     minNumbOfChars: PropTypes.number,
     placeholder: PropTypes.string,
     wrapperClassName: PropTypes.string,
-    inputElements: PropTypes.func,
     onResultSelect: PropTypes.func,
     onResultChoose: PropTypes.func,
     onResultsFetch: PropTypes.func,
@@ -152,7 +151,6 @@ SearchWithAutoComplete.defaultProps = {
     minNumbOfChars: 3,
     placeholder: '',
     wrapperClassName: null,
-    inputElements: null,
     onResultSelect: null,
     onResultChoose: null,
     onResultsFetch: null,
