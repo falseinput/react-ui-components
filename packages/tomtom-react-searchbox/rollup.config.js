@@ -3,6 +3,7 @@ const resolve = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
 const postcss = require('rollup-plugin-postcss');
 const postcssNested = require('postcss-nested');
+const postcssVariables = require('postcss-css-variables');
 
 const globals = {
     'prop-types': 'PropTypes',
@@ -24,6 +25,7 @@ export default {
         commonjs(),
         postcss({
             plugins: [
+                postcssVariables,
                 postcssNested,
             ],
             extract: true,
