@@ -24,3 +24,38 @@
 .App-link {
   color: #09d3ac;
 }
+
+.section {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 800px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.subsection {
+  margin-bottom: 48px;
+}
+
+.select-wrapper {
+  max-width: 300px;
+  margin: 16px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.header {
+  background: #284a77;
+  color: #fff;
+}
+
+ul {
+  padding: 0;
+  list-style: square;
+}
+
+
+h1, h3 {
+  margin: 0;
+  margin-bottom: 16px;
+}
