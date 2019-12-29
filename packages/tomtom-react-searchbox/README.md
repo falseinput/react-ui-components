@@ -1,5 +1,5 @@
 # tomtom-react-searchbox
-[![coverage](https://img.shields.io/circleci/build/github/falseinput/react-ui-components/master
+[![build](https://img.shields.io/circleci/build/github/falseinput/react-ui-components/master
 )](https://circleci.com/gh/falseinput/react-ui-components)
 [![coverage](https://img.shields.io/codecov/c/github/falseinput/react-ui-components)](https://codecov.io/gh/falseinput/react-ui-components)
 
