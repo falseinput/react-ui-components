@@ -1,4 +1,6 @@
 # tomtom-react-searchbox
+[![coverage](https://img.shields.io/circleci/build/github/falseinput/react-ui-components/master
+)](https://circleci.com/gh/falseinput/react-ui-components)
 [![coverage](https://img.shields.io/codecov/c/github/falseinput/react-ui-components)](https://codecov.io/gh/falseinput/react-ui-components)
 
 Simple React component for searchbox with autocomplete.
@@ -18,7 +20,6 @@ import TomtomReactSearchbox from 'tomtom-react-searchbox';
 function Example() {
     return (
         <TomtomReactSearchbox
-            minNumbOfChars={3}
             placeholder="Search for all kind of things..."
             onResultChoose={(result) => console.log(result)}
             searchOptions={{
