@@ -23,4 +23,4 @@ jobs:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 REACT_APP_TOMTOM_SEARCH_API_KEY: ${{ secrets.REACT_APP_TOMTOM_SEARCH_API_KEY }}
                 BRANCH: gh-pages
-                FOLDER: build
+                FOLDER: showcase/build
