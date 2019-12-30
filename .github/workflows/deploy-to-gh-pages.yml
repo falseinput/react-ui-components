@@ -12,8 +12,10 @@ jobs:
 
         - name: Build
           run: |
+                sudo npm i -g npx
                 npm install
-                npm run-script build
+                npx lerna bootstrap
+                npx lerna run build
 
         - name: Deploy
           uses: JamesIves/github-pages-deploy-action@releases/v3
