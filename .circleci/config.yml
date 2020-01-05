@@ -29,7 +29,7 @@ jobs:
 
       - run:
           name: install dependencies
-          command: 'sudo npm i -g npx && npm i && npx lerna bootstrap'
+          command: 'sudo npm i -g npx && npm i && npx lerna bootstrap --hoist'
 
       - save_cache:
           paths:
