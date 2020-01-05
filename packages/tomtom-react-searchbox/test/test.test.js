@@ -214,6 +214,7 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
             const input = container.querySelector('input');
             fireEvent.change(input, { target: { value: 'Some' } });
             await findAllByTestId('result-item');
+            fireEvent.keyDown(input, { key: 'Arrow down', keyCode: 40 });
             fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
         });
 
@@ -236,12 +237,54 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
             fireEvent.change(input, { target: { value: 'Some' } });
             await findAllByTestId('result-item');
             fireEvent.keyDown(input, { key: 'Arrow down', keyCode: 40 });
+            fireEvent.keyDown(input, { key: 'Arrow down', keyCode: 40 });
             fireEvent.keyDown(input, { key: 'Arrow up', keyCode: 38 });
         });
 
         expect(onResultSelect).toHaveBeenCalledWith(expectedResponse.results[1]);
         expect(onResultSelect).toHaveBeenCalledWith(expectedResponse.results[0]);
     });
+
+    test('should call onResultChoose callback when search is triggered manually', async () => {
+        fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+        const manuallyTriggeredCallResponse = {
+            results: [{
+                type: 'Geography',
+                id: 'IT/GEO/p0/21544',
+                score: 2.39174,
+                entityType: 'Municipality',
+                address: {
+                    municipality: 'Ala',
+                    countrySecondarySubdivision: 'Trento',
+                    countrySubdivision: 'Trentino-South Tyrol',
+                    countryCode: 'IT',
+                    country: 'Italy',
+                    countryCodeISO3: 'ITA',
+                    freeformAddress: 'Ala',
+                },
+            }],
+        };
+        fetch.mockResponseOnce(JSON.stringify(manuallyTriggeredCallResponse));
+
+        const onResultChoose = jest.fn();
+        await act(async () => {
+            const { container, findAllByTestId } = render(
+                <TomtomReactSearchBox
+                    onResultChoose={onResultChoose}
+                    searchOptions={{}}
+                />,
+            );
+
+            const input = container.querySelector('input');
+            fireEvent.change(input, { target: { value: 'Some' } });
+            await findAllByTestId('result-item');
+            fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
+        });
+
+        expect(fetch).toHaveBeenCalledTimes(2);
+        expect(onResultChoose).toHaveBeenCalledWith(manuallyTriggeredCallResponse.results[0]);
+    });
+
 
     test('should hide results list when escape is pressed', async () => {
         fetch.mockResponseOnce(JSON.stringify(expectedResponse));
@@ -299,9 +342,7 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
             );
 
             input = container.querySelector('input');
-            await act(async () => {
-                fireEvent.change(input, { target: { value: 'Some' } });
-            });
+            fireEvent.change(input, { target: { value: 'Some' } });
             clear = await findByTestId('clear');
         });
         expect(clear).toBeInTheDocument();
@@ -451,11 +492,6 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
 
                 input = container.querySelector('input');
                 fireEvent.change(input, { target: { value: 'Some' } });
-                try {
-                    clear = await findByTestId('custom-result').catch();
-                } catch (e) {
-                    // nope
-                }
             });
 
             expect(CustomResult).toBeCalledWith({

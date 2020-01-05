@@ -42,15 +42,12 @@ function SearchBox(props) {
         }
     }
 
-    const [selectedItemIndex, setSelectedItemIndex] = React.useState(null);
+    const [selectedItemIndex, setSelectedItemIndex] = React.useState(-1);
 
     React.useEffect(() => {
         const handleKeyDown = async (event) => {
             switch (event.keyCode) {
             case KEY_CODES.ARROW_DOWN: {
-                if (selectedItemIndex === null) {
-                    return;
-                }
                 const selectedItem = selectedItemIndex < searchResults.results.length - 1
                     ? selectedItemIndex + 1
                     : selectedItemIndex;
@@ -58,17 +55,28 @@ function SearchBox(props) {
                 break;
             }
             case KEY_CODES.ARROW_UP: {
-                if (selectedItemIndex === null) {
-                    return;
-                }
-                const selectedItem = selectedItemIndex > 0
+                const selectedItem = selectedItemIndex >= 0
                     ? selectedItemIndex - 1
                     : selectedItemIndex;
                 setSelectedItemIndex(selectedItem);
                 break;
             }
             case KEY_CODES.ENTER: {
-                if (selectedItemIndex === null) {
+                if (selectedItemIndex === -1) {
+                    const results = await fuzzySearchService({
+                        query: input,
+                        ...props.searchOptions,
+                        typeahead: false,
+                    }).catch();
+
+                    if (results.results.length > 0) {
+                        setInput(formatters.getFormattedResult(results.results[0]));
+                        setSearchResults(results);
+                        if (props.onResultChoose) {
+                            props.onResultChoose(results.results[0]);
+                        }
+                    }
+                    setResultsVisible(false);
                     return;
                 }
                 const result = searchResults.results[selectedItemIndex];
@@ -95,21 +103,20 @@ function SearchBox(props) {
     }, [keyDownEvent]);
 
     React.useEffect(() => {
-        if (props.onResultSelect && selectedItemIndex !== null) {
+        if (props.onResultSelect && selectedItemIndex !== -1 && resultsVisible) {
             props.onResultSelect(searchResults.results[selectedItemIndex]);
         }
     }, [selectedItemIndex]);
 
     React.useEffect(() => {
+        setSelectedItemIndex(-1);
         if (searchResults === null) {
-            setSelectedItemIndex(null);
             return;
         }
         if (props.onResultsFetch) {
             props.onResultsFetch(searchResults);
         }
 
-        setSelectedItemIndex(searchResults.results.length > 0 ? 0 : null);
     }, [searchResults]);
 
 
