@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-import Clear from './Clear';
+import * as customProps from './customProps';
 import KEY_CODES from './keyCodes';
 
 const onKeyDown = (event) => {
@@ -10,7 +10,7 @@ const onKeyDown = (event) => {
     }
 };
 
-function SearchInput({
+function InputWrapper({
     value,
     placeholder,
     autofocus,
@@ -19,6 +19,7 @@ function SearchInput({
     onChange,
     onClear,
     inputWidthCallback,
+    components,
 }) {
     const inputContainerRef = React.useRef(null);
 
@@ -43,12 +44,12 @@ function SearchInput({
                 value={value}
                 onChange={(event) => onChange(event.target.value)}
             />
-            { value && <Clear onClear={onClear} /> }
+            { value && components.Clear && <components.Clear onClear={onClear} /> }
         </div>
     );
 }
 
-SearchInput.propTypes = {
+InputWrapper.propTypes = {
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string.isRequired,
     onFocus: PropTypes.func.isRequired,
@@ -56,6 +57,8 @@ SearchInput.propTypes = {
     onBlur: PropTypes.func.isRequired,
     inputWidthCallback: PropTypes.func.isRequired,
     placeholder: PropTypes.string.isRequired,
+    autofocus: PropTypes.bool.isRequired,
+    components: customProps.components.isRequired,
 };
 
-export default SearchInput;
+export default InputWrapper;

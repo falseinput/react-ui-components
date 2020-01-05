@@ -39,6 +39,7 @@ function Example() {
 | [minNumbOfChars=`3`] | `Number`          | Minimum number of characters which will trigger API call.                                                  |
 | [placeholder=`''`]      | `String`          | Input's placeholder.                                                                                       |
 | [autofocus=`false`]      | `Boolean`          | Sets autofocus on input element.                                                                                       |
+| [components]      | `Object`         | Gives possibility to override searchbox's components.                                                                                      |
 | [wrapperClassName] | `String`          | Class name passed to the container div.                                                                    |
 | [onResultSelect]   | `Function`        | Called when result is selected (by using arrow keys). Argument of this function is selected result data.   |
 | [onResultChoose]   | `Function`        | Called when result is chosen (by clicking on pressing enter while one of the results is selected). Argument of this function is choosen result data.                                                                                                            |

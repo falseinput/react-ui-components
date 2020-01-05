@@ -59,3 +59,25 @@ h1, h3 {
   margin: 0;
   margin-bottom: 16px;
 }
+
+
+.my-result {
+  display: flex;
+
+  &:hover,
+  &.-selected {
+    background-color: #09d3ac,
+  }
+
+  .tomtom-react-searchbox__result {
+    &:hover,
+    &.-selected {
+      background-color: #09d3ac,
+    }
+  }
+
+  .icon {
+    width: 24px;
+    padding-right: 8px;
+  }
+}

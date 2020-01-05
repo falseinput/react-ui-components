@@ -6,7 +6,7 @@ import {
     act,
 } from '@testing-library/react';
 import fetch from 'jest-fetch-mock';
-import TomtomReactSearchBox from '../src/index';
+import { SearchBox as TomtomReactSearchBox } from '../src/index';
 
 
 describe('TomtomReactSearchBox: props', () => {
@@ -214,7 +214,6 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
             const input = container.querySelector('input');
             fireEvent.change(input, { target: { value: 'Some' } });
             await findAllByTestId('result-item');
-            fireEvent.keyDown(input, { key: 'Arrow down', keyCode: 40 });
             fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
         });
 
@@ -237,11 +236,9 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
             fireEvent.change(input, { target: { value: 'Some' } });
             await findAllByTestId('result-item');
             fireEvent.keyDown(input, { key: 'Arrow down', keyCode: 40 });
-            fireEvent.keyDown(input, { key: 'Arrow down', keyCode: 40 });
             fireEvent.keyDown(input, { key: 'Arrow up', keyCode: 38 });
         });
 
-        expect(onResultSelect).toHaveBeenCalledWith(expectedResponse.results[0]);
         expect(onResultSelect).toHaveBeenCalledWith(expectedResponse.results[1]);
         expect(onResultSelect).toHaveBeenCalledWith(expectedResponse.results[0]);
     });
@@ -318,14 +315,12 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
     test('should not show results if no results were returned from api', async () => {
         const currentExpectedResponse = { results: [] };
         fetch.mockResponseOnce(JSON.stringify(currentExpectedResponse));
-        const onResultFetch = jest.fn();
 
         let input;
         let resultsList;
         await act(async () => {
             const { container, findByTestId } = render(
                 <TomtomReactSearchBox
-                    onResultFetch={onResultFetch}
                     searchOptions={{}}
                 />,
             );
@@ -340,5 +335,144 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
         });
 
         expect(resultsList).toBe(undefined);
+    });
+
+    describe('TomtomReactSearchbox: custom components', () => {
+        const expectedResponse = {
+            results: [
+                {
+                    type: 'POI',
+                    id: 'KZ/POI/p0/239681',
+                    score: 3.41131,
+                    info: 'search: ta: 398009000167979-KZ',
+                    poi: {
+                        name: 'Алматы Международный Аэропорт',
+                    },
+                    address: {
+                        municipalitySubdivision: 'Almaty',
+                        municipality: 'Турксибский Район',
+                        countrySecondarySubdivision: 'Almaty City',
+                        countrySubdivision: 'Алматы',
+                        countryCode: 'KZ',
+                        country: 'Kazakhstan',
+                        countryCodeISO3: 'KAZ',
+                        freeformAddress: 'Турксибский Район Almaty Almaty City, Алматы',
+                    },
+                },
+                {
+                    type: 'Geography',
+                    id: 'IT/GEO/p0/21544',
+                    score: 2.39174,
+                    entityType: 'Municipality',
+                    address: {
+                        municipality: 'Ala',
+                        countrySecondarySubdivision: 'Trento',
+                        countrySubdivision: 'Trentino-South Tyrol',
+                        countryCode: 'IT',
+                        country: 'Italy',
+                        countryCodeISO3: 'ITA',
+                        freeformAddress: 'Ala',
+                    },
+                },
+                {
+                    type: 'Geography',
+                    id: 'IT/GEO/p0/1023',
+                    score: 2.33668,
+                    entityType: 'Municipality',
+                    address: {
+                        municipality: 'Ala di Stura',
+                        countrySecondarySubdivision: 'Turin',
+                        countrySubdivision: 'Piedmont',
+                        countryCode: 'IT',
+                        country: 'Italy',
+                        countryCodeISO3: 'ITA',
+                        freeformAddress: 'Ala di Stura',
+                    },
+                },
+            ],
+        };
+        beforeEach(() => {
+            fetch.resetMocks();
+        });
+        afterEach(cleanup);
+
+
+        test('should replace Clear component when provided', async () => {
+            fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+            let input;
+            let clear;
+            const CustomClear = jest.fn();
+            // eslint-disable-next-line
+            CustomClear.mockImplementation(() => <div data-testid="custom-clear" >Clear</div>);
+
+            await act(async () => {
+                const { container, findByTestId } = render(
+                    <TomtomReactSearchBox
+                        components={{
+                            Clear: CustomClear,
+                        }}
+                        searchOptions={{}}
+                    />,
+                );
+
+                input = container.querySelector('input');
+                fireEvent.change(input, { target: { value: 'Some' } });
+                try {
+                    clear = await findByTestId('custom-clear').catch();
+                } catch (e) {
+                    // nope
+                }
+            });
+
+            expect(clear).toBeInTheDocument();
+            expect(clear.textContent).toBe('Clear');
+            expect(CustomClear).toBeCalledWith({
+                onClear: expect.any(Function),
+            }, {});
+        });
+
+        test('should replace Result component when provided', async () => {
+            fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+            let input;
+            let clear;
+            const CustomResult = jest.fn();
+            // eslint-disable-next-line
+            CustomResult.mockImplementation(() => <div data-testid="custom-result" >Clear</div>);
+
+            await act(async () => {
+                const { container, findByTestId } = render(
+                    <TomtomReactSearchBox
+                        components={{
+                            Result: CustomResult,
+                        }}
+                        searchOptions={{}}
+                    />,
+                );
+
+                input = container.querySelector('input');
+                fireEvent.change(input, { target: { value: 'Some' } });
+                try {
+                    clear = await findByTestId('custom-result').catch();
+                } catch (e) {
+                    // nope
+                }
+            });
+
+            expect(CustomResult).toBeCalledWith({
+                result: expectedResponse.results[0],
+                isSelected: expect.any(Boolean),
+                onResultClick: expect.any(Function),
+            }, {});
+            expect(CustomResult).toBeCalledWith({
+                result: expectedResponse.results[1],
+                isSelected: expect.any(Boolean),
+                onResultClick: expect.any(Function),
+            }, {});
+            expect(CustomResult).toBeCalledWith({
+                result: expectedResponse.results[2],
+                isSelected: expect.any(Boolean),
+                onResultClick: expect.any(Function),
+            }, {});
+        });
     });
 });
