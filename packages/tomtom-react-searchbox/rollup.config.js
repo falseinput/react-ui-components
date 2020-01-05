@@ -16,7 +16,7 @@ export default {
     output: {
         file: 'dist/tomtom-react-searchbox.js',
         name: 'tomtom-react-searchbox',
-        format: 'umd',
+        format: 'cjs',
         globals,
     },
     external: Object.keys(globals),
