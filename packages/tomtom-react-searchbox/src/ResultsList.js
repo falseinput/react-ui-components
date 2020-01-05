@@ -2,6 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 
 import * as formatters from './formatters';
+import * as customProps from './customProps';
 
 function ResultsList({
     results,
@@ -9,6 +10,7 @@ function ResultsList({
     width,
     onResultSelect,
     setResultsVisible,
+    components,
 }) {
     const onResultClick = (result) => {
         onResultSelect({ formattedResult: formatters.getFormattedResult(result), result });
@@ -25,35 +27,16 @@ function ResultsList({
             style={{ width }}
             data-testid="results-list"
         >
-            {results.results.map((result, index) => {
-                const poiName = formatters.getPoiName(result);
-                const address = formatters.getAddress(result);
-                let resultParts = null;
-
-                if (poiName && address) {
-                    resultParts = (
-                        <>
-                            <div className="tomtom-react-searchbox__result-item -primary">{`${poiName} `}</div>
-                            <br />
-                            <div className="tomtom-react-searchbox__result-item -secondary">{address}</div>
-                        </>
-                    );
-                } else {
-                    resultParts = <div className="tomtom-react-searchbox__result-item -primary">{address}</div>;
-                }
-
-                return (
-                    <div
-                        data-testid="result-item"
-                        className={`tomtom-react-searchbox__result  ${index === selectedItemIndex ? '-selected' : ''}`}
-                        onMouseDown={(event) => event.preventDefault()}
-                        onClick={() => onResultClick(result)}
-                        key={formatters.getId(result)}
-                    >
-                        {resultParts}
-                    </div>
-                );
-            })}
+            {results.results.map((result, index) => (
+                components.Result ? (
+                    <components.Result
+                        key={result.id}
+                        result={result}
+                        isSelected={index === selectedItemIndex}
+                        onResultClick={() => onResultClick(result)}
+                    />
+                ) : null
+            ))}
         </div>
     );
 }
@@ -61,9 +44,14 @@ function ResultsList({
 ResultsList.propTypes = {
     results: PropTypes.objectOf(PropTypes.any).isRequired,
     width: PropTypes.number.isRequired,
-    selectedItemIndex: PropTypes.number.isRequired,
     setResultsVisible: PropTypes.func.isRequired,
     onResultSelect: PropTypes.func.isRequired,
+    selectedItemIndex: PropTypes.number,
+    components: customProps.components.isRequired,
+};
+
+ResultsList.defaultProps = {
+    selectedItemIndex: null,
 };
 
 export default ResultsList;

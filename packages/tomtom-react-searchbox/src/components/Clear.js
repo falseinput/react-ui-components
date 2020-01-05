@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-import CloseIcon from './assets/clear.svg';
+import CloseIcon from '../assets/clear.svg';
 
 function Clear({ onClear }) {
     return (
