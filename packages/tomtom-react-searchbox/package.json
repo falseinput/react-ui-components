@@ -14,7 +14,12 @@
   "files": [
     "dist/*"
   ],
-  "keywords": ["searchbox", "react", "tomtom", "search"],
+  "keywords": [
+    "searchbox",
+    "react",
+    "tomtom",
+    "search"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/falseinput/react-ui-components.git"
