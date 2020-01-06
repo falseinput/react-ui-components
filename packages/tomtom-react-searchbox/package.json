@@ -1,6 +1,6 @@
 {
   "name": "tomtom-react-searchbox",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "dist/tomtom-react-searchbox.js",
   "browser": "dist/tomtom-react-searchbox.js",
@@ -8,8 +8,13 @@
   "scripts": {
     "start": "rollup -c rollup.config.js --watch",
     "build": "rollup -c rollup.config.js",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "prepublishOnly": "npm run build"
   },
+  "files": [
+    "dist/*"
+  ],
+  "keywords": ["searchbox", "react", "tomtom", "search"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/falseinput/react-ui-components.git"
@@ -19,7 +24,7 @@
   "bugs": {
     "url": "https://github.com/falseinput/react-ui-components/issues"
   },
-  "homepage": "https://github.com/falseinput/react-ui-components/tomtom-react-searchbox#readme",
+  "homepage": "https://github.com/falseinput/react-ui-components",
   "devDependencies": {
     "@babel/core": "7.7.7",
     "@babel/plugin-transform-runtime": "7.7.6",

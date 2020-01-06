@@ -12,10 +12,9 @@ jobs:
 
         - name: Build
           run: |
-                sudo npm i -g npx
+                cd showcase/
                 npm install
-                npx lerna bootstrap
-                npx lerna run build
+                npm run build
 
         - name: Deploy
           uses: JamesIves/github-pages-deploy-action@releases/v3
