@@ -11,15 +11,16 @@ jobs:
           uses: actions/checkout@v1
 
         - name: Build
+          env:
+                REACT_APP_TOMTOM_SEARCH_API_KEY: ${{ secrets.REACT_APP_TOMTOM_SEARCH_API_KEY }}
           run: |
                 cd showcase/
                 npm install
-                npm run build
+                REACT_APP_TOMTOM_SEARCH_API_KEY=$REACT_APP_TOMTOM_SEARCH_API_KEY npm run build
 
         - name: Deploy
           uses: JamesIves/github-pages-deploy-action@releases/v3
           with:
                 ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-                REACT_APP_TOMTOM_SEARCH_API_KEY: ${{ secrets.REACT_APP_TOMTOM_SEARCH_API_KEY }}
                 BRANCH: gh-pages
                 FOLDER: showcase/build
