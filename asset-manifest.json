@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.17c12ce3.chunk.css",
-    "main.js": "/static/js/main.edf44e0a.chunk.js",
-    "main.js.map": "/static/js/main.edf44e0a.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.a99fddfb.js",
-    "runtime-main.js.map": "/static/js/runtime-main.a99fddfb.js.map",
-    "static/js/2.3c8cffdd.chunk.js": "/static/js/2.3c8cffdd.chunk.js",
-    "static/js/2.3c8cffdd.chunk.js.map": "/static/js/2.3c8cffdd.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.ec0b6fe056ea1b09f6346ef73ba2ce65.js": "/precache-manifest.ec0b6fe056ea1b09f6346ef73ba2ce65.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.17c12ce3.chunk.css.map": "/static/css/main.17c12ce3.chunk.css.map",
-    "static/js/2.3c8cffdd.chunk.js.LICENSE": "/static/js/2.3c8cffdd.chunk.js.LICENSE"
+    "main.css": "./static/css/main.cbadf7dd.chunk.css",
+    "main.js": "./static/js/main.d2574522.chunk.js",
+    "main.js.map": "./static/js/main.d2574522.chunk.js.map",
+    "runtime-main.js": "./static/js/runtime-main.3a3dd6d3.js",
+    "runtime-main.js.map": "./static/js/runtime-main.3a3dd6d3.js.map",
+    "static/js/2.c2192b0d.chunk.js": "./static/js/2.c2192b0d.chunk.js",
+    "static/js/2.c2192b0d.chunk.js.map": "./static/js/2.c2192b0d.chunk.js.map",
+    "index.html": "./index.html",
+    "precache-manifest.829cd92446bb7707f49414695c8a6641.js": "./precache-manifest.829cd92446bb7707f49414695c8a6641.js",
+    "service-worker.js": "./service-worker.js",
+    "static/css/main.cbadf7dd.chunk.css.map": "./static/css/main.cbadf7dd.chunk.css.map",
+    "static/js/2.c2192b0d.chunk.js.LICENSE": "./static/js/2.c2192b0d.chunk.js.LICENSE"
   },
   "entrypoints": [
-    "static/js/runtime-main.a99fddfb.js",
-    "static/js/2.3c8cffdd.chunk.js",
-    "static/css/main.17c12ce3.chunk.css",
-    "static/js/main.edf44e0a.chunk.js"
+    "static/js/runtime-main.3a3dd6d3.js",
+    "static/js/2.c2192b0d.chunk.js",
+    "static/css/main.cbadf7dd.chunk.css",
+    "static/js/main.d2574522.chunk.js"
   ]
 }
