@@ -1,4 +1,4 @@
-@import "tomtom-react-searchbox";
+@import "falseinput-react-searchbox";
 
 .App {
   text-align: center;
@@ -69,7 +69,7 @@ h1, h3 {
     background-color: #09d3ac,
   }
 
-  .tomtom-react-searchbox__result {
+  .react-searchbox__result {
     &:hover,
     &.-selected {
       background-color: #09d3ac,

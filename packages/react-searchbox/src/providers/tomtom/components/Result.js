@@ -15,19 +15,19 @@ function Result({
     if (poiName && address) {
         resultParts = (
             <>
-                <div className="tomtom-react-searchbox__result-item -primary">{`${poiName} `}</div>
+                <div className="react-searchbox__result-item -primary">{`${poiName} `}</div>
                 <br />
-                <div className="tomtom-react-searchbox__result-item -secondary">{address}</div>
+                <div className="react-searchbox__result-item -secondary">{address}</div>
             </>
         );
     } else {
-        resultParts = <div className="tomtom-react-searchbox__result-item -primary">{address}</div>;
+        resultParts = <div className="react-searchbox__result-item -primary">{address}</div>;
     }
 
     return (
         <div
             data-testid="result-item"
-            className={`tomtom-react-searchbox__result  ${isSelected ? '-selected' : ''}`}
+            className={`react-searchbox__result  ${isSelected ? '-selected' : ''}`}
             onMouseDown={(event) => event.preventDefault()}
             onClick={onResultClick}
             key={formatters.getId(result)}

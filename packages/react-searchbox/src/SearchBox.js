@@ -3,14 +3,9 @@ import PropTypes from 'prop-types';
 import InputWrapper from './InputWrapper';
 import ResultsList from './ResultsList';
 
-import * as formatters from './formatters';
 import KEY_CODES from './keyCodes';
-import { fuzzySearchService } from './api/services';
 import * as customProps from './customProps';
 import defaultComponents from './components/components';
-
-
-import './style.css';
 
 function SearchBox(props) {
     const [input, setInput] = React.useState('');
@@ -24,7 +19,7 @@ function SearchBox(props) {
         setInput(value);
 
         if (value.length >= props.minNumbOfChars) {
-            const results = await fuzzySearchService({ query: value, ...props.searchOptions })
+            const results = await props.service({ query: value, ...props.searchOptions })
                 .catch();
             setSearchResults(results);
             setResultsVisible(true);
@@ -48,7 +43,7 @@ function SearchBox(props) {
         const handleKeyDown = async (event) => {
             switch (event.keyCode) {
             case KEY_CODES.ARROW_DOWN: {
-                const selectedItem = selectedItemIndex < searchResults.results.length - 1
+                const selectedItem = selectedItemIndex < props.getResults(searchResults).length - 1
                     ? selectedItemIndex + 1
                     : selectedItemIndex;
                 setSelectedItemIndex(selectedItem);
@@ -63,25 +58,27 @@ function SearchBox(props) {
             }
             case KEY_CODES.ENTER: {
                 if (selectedItemIndex === -1) {
-                    const results = await fuzzySearchService({
+                    const response = await props.service({
                         query: input,
                         ...props.searchOptions,
                         typeahead: false,
                     }).catch();
 
-                    if (results.results.length > 0) {
-                        setInput(formatters.getFormattedResult(results.results[0]));
-                        setSearchResults(results);
+                    const results = props.getResults(response);
+
+                    if (results.length > 0) {
+                        setInput(props.getFormattedResult(results[0]));
+                        setSearchResults(response);
                         if (props.onResultChoose) {
-                            props.onResultChoose(results.results[0]);
+                            props.onResultChoose(results[0]);
                         }
                     }
                     setResultsVisible(false);
                     return;
                 }
-                const result = searchResults.results[selectedItemIndex];
+                const result = props.getResults(searchResults)[selectedItemIndex];
                 onResultSelect({
-                    formattedResult: formatters.getFormattedResult(result),
+                    formattedResult: props.getFormattedResult(result),
                     result,
                 });
 
@@ -104,7 +101,7 @@ function SearchBox(props) {
 
     React.useEffect(() => {
         if (props.onResultSelect && selectedItemIndex !== -1 && resultsVisible) {
-            props.onResultSelect(searchResults.results[selectedItemIndex]);
+            props.onResultSelect(props.getResults(searchResults)[selectedItemIndex]);
         }
     }, [selectedItemIndex]);
 
@@ -116,7 +113,6 @@ function SearchBox(props) {
         if (props.onResultsFetch) {
             props.onResultsFetch(searchResults);
         }
-
     }, [searchResults]);
 
 
@@ -125,6 +121,8 @@ function SearchBox(props) {
         autofocus,
         wrapperClassName,
         components,
+        getFormattedResult,
+        getResults,
     } = props;
 
     const mergedComponents = { ...defaultComponents, ...components };
@@ -147,11 +145,13 @@ function SearchBox(props) {
             />
             {(searchResults && resultsVisible) && (
                 <ResultsList
+                    getFormattedResult={getFormattedResult}
+                    getResults={getResults}
                     components={mergedComponents}
                     selectedItemIndex={selectedItemIndex}
                     onResultSelect={onResultSelect}
                     setResultsVisible={setResultsVisible}
-                    results={searchResults}
+                    response={searchResults}
                     width={inputWidth}
                 />
             )}
@@ -174,6 +174,9 @@ SearchBox.defaultProps = {
 SearchBox.propTypes = {
     searchOptions: PropTypes.objectOf(PropTypes.any).isRequired,
     minNumbOfChars: PropTypes.number,
+    getFormattedResult: PropTypes.func.isRequired,
+    getResults: PropTypes.func.isRequired,
+    service: PropTypes.func.isRequired,
     placeholder: PropTypes.string,
     autofocus: PropTypes.bool,
     wrapperClassName: PropTypes.string,

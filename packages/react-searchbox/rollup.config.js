@@ -11,14 +11,7 @@ const globals = {
     react: 'React',
 };
 
-export default {
-    input: 'src/index.js',
-    output: {
-        file: 'dist/tomtom-react-searchbox.js',
-        name: 'tomtom-react-searchbox',
-        format: 'umd',
-        globals,
-    },
+const commonConfig = {
     external: Object.keys(globals),
     plugins: [
         babel({ exclude: ['node_modules/**'], runtimeHelpers: false }),
@@ -34,3 +27,24 @@ export default {
         svgr(),
     ],
 };
+
+export default [
+    {
+        input: 'src/index.js',
+        output: {
+            file: 'dist/index.js',
+            format: 'cjs',
+            globals,
+        },
+        ...commonConfig,
+    },
+    {
+        input: 'src/providers/tomtom/index.js',
+        output: {
+            file: 'dist/tomtom/index.js',
+            format: 'cjs',
+            globals,
+        },
+        ...commonConfig,
+    },
+];

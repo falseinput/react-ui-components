@@ -1,5 +1,5 @@
 import React from 'react';
-import { SearchBox as TomtomReactSearchbox, components } from 'tomtom-react-searchbox';
+import TomtomReactSearchbox, { components } from 'falseinput-react-searchbox/tomtom';
 
 function CustomClear({ onClear }) {
     return <div onClick={onClear}>Clear</div>;
@@ -25,7 +25,7 @@ export default function App() {
       <>
       <div className="header">
         <div className="section">
-          <h1>Tomtom React Searchbox</h1>
+          <h1>React Searchbox</h1>
           Lightweight & easily customizable searchbox component.
           <div className="select-wrapper">
             <TomtomReactSearchbox
@@ -53,7 +53,9 @@ export default function App() {
             <h2>Basic usage</h2>
 
   <pre><code className="language-jsx">
-  {`<TomtomReactSearchbox
+  {`import Searchbox from 'falseinput-react-searchbox/tomtom';
+
+<Searchbox
     placeholder="Search for an address"
     searchOptions={{
       key: 'your-api-key',

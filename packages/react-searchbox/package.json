@@ -1,10 +1,10 @@
 {
-  "name": "tomtom-react-searchbox",
+  "name": "falseinput-react-searchbox",
   "version": "0.1.1",
   "description": "",
-  "main": "dist/tomtom-react-searchbox.js",
-  "browser": "dist/tomtom-react-searchbox.js",
-  "style": "dist/tomtom-react-searchbox.css",
+  "main": "dist/react-searchbox.js",
+  "browser": "dist/react-searchbox.js",
+  "style": "dist/react-searchbox.css",
   "scripts": {
     "start": "rollup -c rollup.config.js --watch",
     "build": "rollup -c rollup.config.js",
@@ -30,6 +30,9 @@
     "url": "https://github.com/falseinput/react-ui-components/issues"
   },
   "homepage": "https://github.com/falseinput/react-ui-components",
+  "publishConfig": {
+    "directory": "dist"
+  },
   "devDependencies": {
     "@babel/core": "7.7.7",
     "@babel/plugin-transform-runtime": "7.7.6",

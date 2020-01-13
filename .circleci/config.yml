@@ -29,7 +29,7 @@ jobs:
 
       - run:
           name: install dependencies
-          command: 'cd packages/tomtom-react-searchbox && npm i'
+          command: 'cd packages/react-searchbox && npm i'
 
       - save_cache:
           paths:
@@ -38,12 +38,12 @@ jobs:
 
       - run:
           name: test
-          command: 'cd packages/tomtom-react-searchbox && npm run test'
+          command: 'cd packages/react-searchbox && npm run test'
       - run:
           name: build
-          command: 'cd packages/tomtom-react-searchbox && npm run build'
+          command: 'cd packages/react-searchbox && npm run build'
       - codecov/upload:
-          file: packages/tomtom-react-searchbox/coverage/lcov.info
+          file: packages/react-searchbox/coverage/lcov.info
       - store_artifacts:
-          path: packages/tomtom-react-searchbox/coverage
+          path: packages/react-searchbox/coverage
 
