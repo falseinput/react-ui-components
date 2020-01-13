@@ -1,9 +1,8 @@
 {
-  "name": "falseinput-react-searchbox",
-  "version": "0.1.1",
-  "description": "",
+  "name": "@falseinput/react-searchbox",
+  "version": "0.1.0",
+  "description": "Powerful and customizable searchbox component for your react application.",
   "main": "dist/react-searchbox.js",
-  "browser": "dist/react-searchbox.js",
   "style": "dist/react-searchbox.css",
   "scripts": {
     "start": "rollup -c rollup.config.js --watch",
@@ -31,7 +30,8 @@
   },
   "homepage": "https://github.com/falseinput/react-ui-components",
   "publishConfig": {
-    "directory": "dist"
+    "directory": "dist",
+    "access": "public"
   },
   "devDependencies": {
     "@babel/core": "7.7.7",
