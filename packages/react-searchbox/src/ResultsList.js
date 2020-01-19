@@ -1,33 +1,36 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-import * as formatters from './formatters';
 import * as customProps from './customProps';
 
 function ResultsList({
-    results,
+    response,
     selectedItemIndex,
     width,
     onResultSelect,
     setResultsVisible,
+    getResults,
     components,
+    getFormattedResult,
 }) {
     const onResultClick = (result) => {
-        onResultSelect({ formattedResult: formatters.getFormattedResult(result), result });
+        onResultSelect({ formattedResult: getFormattedResult(result), result });
         setResultsVisible(false);
     };
 
-    if (results.results.length === 0) {
+    const results = getResults(response);
+
+    if (results.length === 0) {
         return null;
     }
 
     return (
         <div
-            className="tomtom-react-searchbox__results"
+            className="react-searchbox__results"
             style={{ width }}
             data-testid="results-list"
         >
-            {results.results.map((result, index) => (
+            {results.map((result, index) => (
                 components.Result ? (
                     <components.Result
                         key={result.id}
@@ -42,10 +45,12 @@ function ResultsList({
 }
 
 ResultsList.propTypes = {
-    results: PropTypes.objectOf(PropTypes.any).isRequired,
+    response: PropTypes.objectOf(PropTypes.any).isRequired,
     width: PropTypes.number.isRequired,
     setResultsVisible: PropTypes.func.isRequired,
     onResultSelect: PropTypes.func.isRequired,
+    getFormattedResult: PropTypes.func.isRequired,
+    getResults: PropTypes.func.isRequired,
     selectedItemIndex: PropTypes.number,
     components: customProps.components.isRequired,
 };

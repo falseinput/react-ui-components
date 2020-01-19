@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.scss';
 
-import TomtomReactSearchbox from './TomtomReactSearchbox';
+import ReactSearchbox from './ReactSearchbox';
 
 import {
   HashRouter as Router,
@@ -14,7 +14,7 @@ function App() {
   return (
     <Router basename="/">
       <Switch>
-          <Route path="/tomtom-react-searchbox" component={TomtomReactSearchbox} />
+          <Route path="/react-searchbox" component={ReactSearchbox} />
       </Switch>
     </Router>
   )

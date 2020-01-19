@@ -6,7 +6,7 @@ import CloseIcon from '../assets/clear.svg';
 function Clear({ onClear }) {
     return (
         <div
-            className="tomtom-react-searchbox__clear"
+            className="react-searchbox__clear"
             onClick={onClear}
             data-testid="clear"
         >

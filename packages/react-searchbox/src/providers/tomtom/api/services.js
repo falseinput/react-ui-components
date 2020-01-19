@@ -13,7 +13,7 @@ const requester = async (url) => {
 };
 
 // eslint-disable-next-line
-export const fuzzySearchService = (options) => {
+export const tomtomFuzzySearchSearchService = (options) => {
     const queryParams = createQueryParams(options);
     const url = `https://api.tomtom.com/search/2/search/${encodeURIComponent(options.query)}.json?${queryParams}`;
 

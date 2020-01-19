@@ -5,16 +5,27 @@ import {
     fireEvent,
     act,
 } from '@testing-library/react';
-import fetch from 'jest-fetch-mock';
-import { SearchBox as TomtomReactSearchBox } from '../src/index';
+import SearchBox from '../src/index';
+
+const serviceMock = jest.fn();
+
+const commonProps = {
+    getResults: (response) => response.results,
+    getFormattedResult: () => 'formattedResult',
+    service: serviceMock,
+    components: {
+        Result: ({ onResultClick }) => <div onClick={onResultClick} data-testid="result-item" />,
+    },
+};
 
 
-describe('TomtomReactSearchBox: props', () => {
+describe('SearchBox: props', () => {
     test('should set placeholder if placeholder prop is passed', async () => {
         const { container } = render(
-            <TomtomReactSearchBox
+            <SearchBox
                 placeholder="Some placeholder"
                 searchOptions={{}}
+                {...commonProps}
             />,
         );
         const input = container.querySelector('input');
@@ -23,10 +34,11 @@ describe('TomtomReactSearchBox: props', () => {
 
     test('should set focus on input if autofocus prop is true', async () => {
         const { container } = render(
-            <TomtomReactSearchBox
+            <SearchBox
                 autofocus
                 placeholder="Some placeholder"
                 searchOptions={{}}
+                {...commonProps}
             />,
         );
         const input = container.querySelector('input');
@@ -34,13 +46,13 @@ describe('TomtomReactSearchBox: props', () => {
     });
 });
 
-describe('TomtomReactSearchBox: events', () => {
+describe('SearchBox: events', () => {
     const expectedResponse = {
         results: [],
     };
     beforeEach(() => {
-        fetch.resetMocks();
-        fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+        serviceMock.mockReset();
+        serviceMock.mockReturnValueOnce(Promise.resolve(expectedResponse));
     });
     afterEach(cleanup);
 
@@ -48,8 +60,9 @@ describe('TomtomReactSearchBox: events', () => {
         let input;
         await act(async () => {
             const { container } = render(
-                <TomtomReactSearchBox
+                <SearchBox
                     searchOptions={{}}
+                    {...commonProps}
                 />,
             );
             input = container.querySelector('input');
@@ -59,51 +72,53 @@ describe('TomtomReactSearchBox: events', () => {
         expect(input.value).toBe('Some text');
     });
 
-    test('should trigger a call if minNumbOfChars equals default', async () => {
+    test('should trigger a call if value equals minNumbOfChars', async () => {
         await act(async () => {
             const { container } = render(
-                <TomtomReactSearchBox
+                <SearchBox
                     searchOptions={{}}
+                    {...commonProps}
                 />,
             );
             const input = container.querySelector('input');
             fireEvent.change(input, { target: { value: 'War' } });
         });
 
-        expect(fetch).toHaveBeenCalled();
+        expect(serviceMock).toHaveBeenCalled();
     });
 
-    test('should not trigger a call if minNumbOfChars is smaller than default', async () => {
+    test('should not trigger a call if value is smaller than minNumbOfChars', async () => {
         await act(async () => {
             const { container } = render(
-                <TomtomReactSearchBox
+                <SearchBox
                     searchOptions={{}}
+                    {...commonProps}
                 />,
             );
             const input = container.querySelector('input');
             fireEvent.change(input, { target: { value: 'So' } });
         });
 
-        expect(fetch).not.toBeCalled();
+        expect(serviceMock).not.toBeCalled();
     });
 
-    test('should not trigger a call if minNumbOfChars is greater default', async () => {
+    test('should trigger a call value is greater than minNumbOfChars', async () => {
         await act(async () => {
             const { container } = render(
-                <TomtomReactSearchBox
-                    minNumbOfChars={5}
+                <SearchBox
                     searchOptions={{}}
+                    {...commonProps}
                 />,
             );
             const input = container.querySelector('input');
             fireEvent.change(input, { target: { value: 'Some' } });
         });
 
-        expect(fetch).not.toBeCalled();
+        expect(serviceMock).toBeCalled();
     });
 });
 
-describe('TomtomReactSearchBox: events and callbacks', () => {
+describe('SearchBox: events and callbacks', () => {
     const expectedResponse = {
         results: [
             {
@@ -158,20 +173,21 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
         ],
     };
     beforeEach(() => {
-        fetch.resetMocks();
+        serviceMock.mockReset();
     });
     afterEach(cleanup);
 
 
     test('should call onResultsFetch callback when results are fetched', async () => {
-        fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+        serviceMock.mockReturnValueOnce(Promise.resolve(expectedResponse));
 
         const onResultsFetch = jest.fn();
         await act(async () => {
             const { container } = render(
-                <TomtomReactSearchBox
+                <SearchBox
                     onResultsFetch={onResultsFetch}
                     searchOptions={{}}
+                    {...commonProps}
                 />,
             );
             const input = container.querySelector('input');
@@ -181,14 +197,15 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
     });
 
     test('should call onResultChoose callback when result element is clicked', async () => {
-        fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+        serviceMock.mockReturnValueOnce(Promise.resolve(expectedResponse));
 
         const onResultChoose = jest.fn();
         await act(async () => {
             const { container, findAllByTestId } = render(
-                <TomtomReactSearchBox
+                <SearchBox
                     onResultChoose={onResultChoose}
                     searchOptions={{}}
+                    {...commonProps}
                 />,
             );
             const input = container.querySelector('input');
@@ -201,14 +218,15 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
     });
 
     test('should call onResultChoose callback when result element is clicked (by pressing enter)', async () => {
-        fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+        serviceMock.mockReturnValueOnce(Promise.resolve(expectedResponse));
 
         const onResultChoose = jest.fn();
         await act(async () => {
             const { container, findAllByTestId } = render(
-                <TomtomReactSearchBox
+                <SearchBox
                     onResultChoose={onResultChoose}
                     searchOptions={{}}
+                    {...commonProps}
                 />,
             );
             const input = container.querySelector('input');
@@ -222,14 +240,15 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
     });
 
     test('should call onResultSelect callback when result element is selected', async () => {
-        fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+        serviceMock.mockReturnValueOnce(Promise.resolve(expectedResponse));
 
         const onResultSelect = jest.fn();
         await act(async () => {
             const { container, findAllByTestId } = render(
-                <TomtomReactSearchBox
+                <SearchBox
                     onResultSelect={onResultSelect}
                     searchOptions={{}}
+                    {...commonProps}
                 />,
             );
 
@@ -246,7 +265,7 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
     });
 
     test('should call onResultChoose callback when search is triggered manually', async () => {
-        fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+        serviceMock.mockReturnValueOnce(Promise.resolve(expectedResponse));
         const manuallyTriggeredCallResponse = {
             results: [{
                 type: 'Geography',
@@ -264,14 +283,15 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
                 },
             }],
         };
-        fetch.mockResponseOnce(JSON.stringify(manuallyTriggeredCallResponse));
+        serviceMock.mockReturnValueOnce(Promise.resolve(manuallyTriggeredCallResponse));
 
         const onResultChoose = jest.fn();
         await act(async () => {
             const { container, findAllByTestId } = render(
-                <TomtomReactSearchBox
+                <SearchBox
                     onResultChoose={onResultChoose}
                     searchOptions={{}}
+                    {...commonProps}
                 />,
             );
 
@@ -281,20 +301,21 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
             fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
         });
 
-        expect(fetch).toHaveBeenCalledTimes(2);
+        expect(serviceMock).toHaveBeenCalledTimes(2);
         expect(onResultChoose).toHaveBeenCalledWith(manuallyTriggeredCallResponse.results[0]);
     });
 
 
     test('should hide results list when escape is pressed', async () => {
-        fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+        serviceMock.mockReturnValueOnce(Promise.resolve(expectedResponse));
 
         let input;
         let resultsList;
         await act(async () => {
             const { container, findByTestId } = render(
-                <TomtomReactSearchBox
+                <SearchBox
                     searchOptions={{}}
+                    {...commonProps}
                 />,
             );
 
@@ -307,14 +328,15 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
     });
 
     test('should clear input and hide results when clear button is clicked', async () => {
-        fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+        serviceMock.mockReturnValueOnce(Promise.resolve(expectedResponse));
 
         let input;
         let resultsList;
         await act(async () => {
             const { container, findByTestId } = render(
-                <TomtomReactSearchBox
+                <SearchBox
                     searchOptions={{}}
+                    {...commonProps}
                 />,
             );
 
@@ -330,14 +352,15 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
     });
 
     test('should not show clear button if input is empty', async () => {
-        fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+        serviceMock.mockReturnValueOnce(Promise.resolve(expectedResponse));
 
         let input;
         let clear;
         await act(async () => {
             const { container, findByTestId } = render(
-                <TomtomReactSearchBox
+                <SearchBox
                     searchOptions={{}}
+                    {...commonProps}
                 />,
             );
 
@@ -355,14 +378,15 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
 
     test('should not show results if no results were returned from api', async () => {
         const currentExpectedResponse = { results: [] };
-        fetch.mockResponseOnce(JSON.stringify(currentExpectedResponse));
+        serviceMock.mockReturnValueOnce(Promise.resolve(currentExpectedResponse));
 
         let input;
         let resultsList;
         await act(async () => {
             const { container, findByTestId } = render(
-                <TomtomReactSearchBox
+                <SearchBox
                     searchOptions={{}}
+                    {...commonProps}
                 />,
             );
 
@@ -433,13 +457,13 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
             ],
         };
         beforeEach(() => {
-            fetch.resetMocks();
+            serviceMock.mockReset();
         });
         afterEach(cleanup);
 
 
         test('should replace Clear component when provided', async () => {
-            fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+            serviceMock.mockReturnValueOnce(Promise.resolve(expectedResponse));
             let input;
             let clear;
             const CustomClear = jest.fn();
@@ -448,7 +472,8 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
 
             await act(async () => {
                 const { container, findByTestId } = render(
-                    <TomtomReactSearchBox
+                    <SearchBox
+                        {...commonProps}
                         components={{
                             Clear: CustomClear,
                         }}
@@ -473,16 +498,16 @@ describe('TomtomReactSearchBox: events and callbacks', () => {
         });
 
         test('should replace Result component when provided', async () => {
-            fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+            serviceMock.mockReturnValueOnce(Promise.resolve(expectedResponse));
             let input;
-            let clear;
             const CustomResult = jest.fn();
             // eslint-disable-next-line
             CustomResult.mockImplementation(() => <div data-testid="custom-result" >Clear</div>);
 
             await act(async () => {
-                const { container, findByTestId } = render(
-                    <TomtomReactSearchBox
+                const { container } = render(
+                    <SearchBox
+                        {...commonProps}
                         components={{
                             Result: CustomResult,
                         }}

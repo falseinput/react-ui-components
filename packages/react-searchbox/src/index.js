@@ -1,7 +1,7 @@
 import SearchBox from './SearchBox';
 import components from './components/components';
 
-export {
-    SearchBox,
-    components,
-};
+import './style.css';
+
+export default SearchBox;
+export { components };

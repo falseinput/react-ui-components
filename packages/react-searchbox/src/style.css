@@ -1,6 +1,6 @@
 
 
-.tomtom-react-searchbox {
+.react-searchbox {
     --color-white: rgb(255, 255, 255);
     --color-solitude: rgb(224, 235, 255);
     --color-silver: rgb(204, 204, 204);
@@ -55,7 +55,7 @@
         box-sizing: border-box;
         position: absolute;
 
-        .tomtom-react-searchbox {
+        .react-searchbox {
             &__result {
                 overflow: hidden;
                 text-overflow: ellipsis;

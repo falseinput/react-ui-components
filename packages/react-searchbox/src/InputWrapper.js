@@ -29,7 +29,7 @@ function InputWrapper({
     }, []);
     return (
         <div
-            className="tomtom-react-searchbox__input-wrapper"
+            className="react-searchbox__input-wrapper"
             ref={inputContainerRef}
         >
             <input
@@ -37,7 +37,7 @@ function InputWrapper({
                 // eslint-disable-next-line
                 autoFocus={autofocus}
                 type="text"
-                className="tomtom-react-searchbox__input"
+                className="react-searchbox__input"
                 onFocus={onFocus}
                 onKeyDown={onKeyDown}
                 onBlur={onBlur}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SearchBox as TomtomReactSearchbox, components } from 'tomtom-react-searchbox';
+import Searchbox, { components } from '@falseinput/react-searchbox/tomtom';
 
 function CustomClear({ onClear }) {
     return <div onClick={onClear}>Clear</div>;
@@ -25,10 +25,10 @@ export default function App() {
       <>
       <div className="header">
         <div className="section">
-          <h1>Tomtom React Searchbox</h1>
-          Lightweight & easily customizable searchbox component.
+          <h1>React Searchbox</h1>
+          Powerful and customizable searchbox component for your react application.
           <div className="select-wrapper">
-            <TomtomReactSearchbox
+            <Searchbox
               autofocus={true}
               placeholder="Search for an address"
               searchOptions={{
@@ -45,7 +45,7 @@ export default function App() {
             <h2>Installation</h2>
 
             <pre><code className="language-">
-  npm i --save tomtom-react-searchbox
+  npm i --save @falseinput/react-searchbox
   </code></pre>
 
           </div>
@@ -53,7 +53,9 @@ export default function App() {
             <h2>Basic usage</h2>
 
   <pre><code className="language-jsx">
-  {`<TomtomReactSearchbox
+  {`import Searchbox from '@falseinput/react-searchbox/tomtom';
+
+<Searchbox
     placeholder="Search for an address"
     searchOptions={{
       key: 'your-api-key',
@@ -71,7 +73,7 @@ export default function App() {
             <h3>Customize behaviour</h3>
             Control when call is triggered by specifying "minNumbOfChars" prop.
             <div className="select-wrapper">
-            <TomtomReactSearchbox
+            <Searchbox
               minNumbOfChars={5}
               placeholder="Typing 5 characters will trigger request"
               searchOptions={{
@@ -83,7 +85,7 @@ export default function App() {
             </div>
 
             <pre data-line="2"><code className="language-jsx" >
-  {`<TomtomReactSearchbox
+  {`<Searchbox
     minNumbOfChars={5}
     placeholder="Typing 5 characters will trigger request"
     searchOptions={{
@@ -107,7 +109,7 @@ export default function App() {
               </ul>
             </div>
             <div className="select-wrapper">
-              <TomtomReactSearchbox
+              <Searchbox
                 onResultsFetch={(results) => { setResultsFetch(resultsFetch + 1); console.log(results); }}
                 onResultChoose={(result) => { setResultChoose(resultChoose + 1); console.log(result); }}
                 onResultSelect={(result) => { setResultSelect(resultSelect + 1); console.log(result); }}
@@ -120,7 +122,7 @@ export default function App() {
                 }} />
             </div>
             <pre data-line="2,3,4"><code className="language-jsx" >
-  {`<TomtomReactSearchbox
+  {`<Searchbox
     onResultsFetch={(results) => console.log(results)}
     onResultChoose={(result) => console.log(result)}
     onResultSelect={(result) => console.log(result)}
@@ -142,7 +144,7 @@ export default function App() {
 
             <div className="select-wrapper">
 
-            <TomtomReactSearchbox
+            <Searchbox
               placeholder='Search for a restaurant'
               components={{
                 Clear: CustomClear,
@@ -158,10 +160,9 @@ export default function App() {
             </div>
 
             <pre data-line="23,24,25,26"><code className="language-jsx" >
-  {`import {
-    SearchBox as TomtomReactSearchbox,
+  {`import Searchbox, {
     components
-  } from 'tomtom-react-searchbox';
+  } from '@falseinput/react-searchbox/tomtom';
 
   function CustomClear({ onClear }) {
     return <div onClick={onClear}>Clear</div>;
@@ -178,7 +179,7 @@ export default function App() {
     );
   }
 
-  <TomtomReactSearchbox
+  <Searchbox
   placeholder='Search for a restaurant'
   components={{
     Clear: CustomClear,
