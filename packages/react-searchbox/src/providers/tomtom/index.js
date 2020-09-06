@@ -12,7 +12,6 @@ const TomtomSearchBox = (props) => {
     const { components: userComponents, ...restOfProps } = props;
     return (
         <SearchBox
-            getResults={(response) => response.results}
             getFormattedResult={formatters.getFormattedResult}
             service={tomtomFuzzySearchSearchService}
             components={{

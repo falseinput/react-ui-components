@@ -1,6 +1,7 @@
 import React from 'react';
 import Searchbox, { components } from '@falseinput/react-searchbox/tomtom';
 
+
 function CustomClear({ onClear }) {
     return <div onClick={onClear}>Clear</div>;
   }

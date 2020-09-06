@@ -4,22 +4,12 @@ import PropTypes from 'prop-types';
 import * as customProps from './customProps';
 
 function ResultsList({
-    response,
+    results,
     selectedItemIndex,
     width,
-    onResultSelect,
-    setResultsVisible,
-    getResults,
+    onResultChoose,
     components,
-    getFormattedResult,
 }) {
-    const onResultClick = (result) => {
-        onResultSelect({ formattedResult: getFormattedResult(result), result });
-        setResultsVisible(false);
-    };
-
-    const results = getResults(response);
-
     if (results.length === 0) {
         return null;
     }
@@ -36,7 +26,7 @@ function ResultsList({
                         key={result.id}
                         result={result}
                         isSelected={index === selectedItemIndex}
-                        onResultClick={() => onResultClick(result)}
+                        onResultClick={() => onResultChoose(result)}
                     />
                 ) : null
             ))}
@@ -45,12 +35,9 @@ function ResultsList({
 }
 
 ResultsList.propTypes = {
-    response: PropTypes.objectOf(PropTypes.any).isRequired,
+    results: PropTypes.arrayOf(PropTypes.object).isRequired,
     width: PropTypes.number.isRequired,
-    setResultsVisible: PropTypes.func.isRequired,
-    onResultSelect: PropTypes.func.isRequired,
-    getFormattedResult: PropTypes.func.isRequired,
-    getResults: PropTypes.func.isRequired,
+    onResultChoose: PropTypes.func.isRequired,
     selectedItemIndex: PropTypes.number,
     components: customProps.components.isRequired,
 };

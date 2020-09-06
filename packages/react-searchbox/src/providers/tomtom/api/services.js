@@ -9,7 +9,8 @@ const requester = async (url) => {
         throw response;
     }
 
-    return response.json();
+    const json = await response.json();
+    return json.results;
 };
 
 // eslint-disable-next-line
