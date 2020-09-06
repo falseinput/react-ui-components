@@ -17,7 +17,8 @@
     "searchbox",
     "react",
     "tomtom",
-    "search"
+    "search",
+    "places search"
   ],
   "repository": {
     "type": "git",

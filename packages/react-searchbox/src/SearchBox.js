@@ -15,7 +15,13 @@ function SearchBox(props) {
     const [keyDownEvent, setKeyDownEvent] = React.useState(null);
     const containerRef = React.useRef();
 
-    async function onChange(value) {
+    async function onChange(event) {
+        if (props.onChange) {
+            props.onChange(event);
+        }
+
+        const { value } = event.target;
+
         setInput(value);
 
         if (value.length >= props.minNumbOfChars) {
@@ -29,11 +35,12 @@ function SearchBox(props) {
         }
     }
 
-    function onResultSelect(results) {
-        setInput(results.formattedResult);
+    function onResultChoose(result) {
+        setInput(props.getFormattedResult(result));
+        setResultsVisible(false);
 
         if (props.onResultChoose) {
-            props.onResultChoose(results.result);
+            props.onResultChoose(result);
         }
     }
 
@@ -43,7 +50,7 @@ function SearchBox(props) {
         const handleKeyDown = async (event) => {
             switch (event.keyCode) {
             case KEY_CODES.ARROW_DOWN: {
-                const selectedItem = selectedItemIndex < props.getResults(searchResults).length - 1
+                const selectedItem = selectedItemIndex < searchResults.length - 1
                     ? selectedItemIndex + 1
                     : selectedItemIndex;
                 setSelectedItemIndex(selectedItem);
@@ -58,17 +65,16 @@ function SearchBox(props) {
             }
             case KEY_CODES.ENTER: {
                 if (selectedItemIndex === -1) {
-                    const response = await props.service({
+                    const results = await props.service({
                         query: input,
                         ...props.searchOptions,
                         typeahead: false,
                     }).catch();
 
-                    const results = props.getResults(response);
 
                     if (results.length > 0) {
                         setInput(props.getFormattedResult(results[0]));
-                        setSearchResults(response);
+                        setSearchResults(results);
                         if (props.onResultChoose) {
                             props.onResultChoose(results[0]);
                         }
@@ -76,11 +82,8 @@ function SearchBox(props) {
                     setResultsVisible(false);
                     return;
                 }
-                const result = props.getResults(searchResults)[selectedItemIndex];
-                onResultSelect({
-                    formattedResult: props.getFormattedResult(result),
-                    result,
-                });
+                const result = searchResults[selectedItemIndex];
+                onResultChoose(result);
 
                 setResultsVisible(false);
 
@@ -101,7 +104,7 @@ function SearchBox(props) {
 
     React.useEffect(() => {
         if (props.onResultSelect && selectedItemIndex !== -1 && resultsVisible) {
-            props.onResultSelect(props.getResults(searchResults)[selectedItemIndex]);
+            props.onResultSelect(searchResults[selectedItemIndex]);
         }
     }, [selectedItemIndex]);
 
@@ -121,15 +124,13 @@ function SearchBox(props) {
         autofocus,
         wrapperClassName,
         components,
-        getFormattedResult,
-        getResults,
     } = props;
 
     const mergedComponents = { ...defaultComponents, ...components };
 
     return (
         <div
-            className={['tomtom-react-searchbox', wrapperClassName].join(' ')}
+            className={['react-searchbox', wrapperClassName].join(' ')}
             ref={containerRef}
             onKeyDown={(event) => { event.persist(); setKeyDownEvent(event) }}>
             <InputWrapper
@@ -145,13 +146,10 @@ function SearchBox(props) {
             />
             {(searchResults && resultsVisible) && (
                 <ResultsList
-                    getFormattedResult={getFormattedResult}
-                    getResults={getResults}
                     components={mergedComponents}
                     selectedItemIndex={selectedItemIndex}
-                    onResultSelect={onResultSelect}
-                    setResultsVisible={setResultsVisible}
-                    response={searchResults}
+                    onResultChoose={onResultChoose}
+                    results={searchResults}
                     width={inputWidth}
                 />
             )}
@@ -168,14 +166,13 @@ SearchBox.defaultProps = {
     onResultSelect: null,
     onResultChoose: null,
     onResultsFetch: null,
+    onChange: null,
 };
-
 
 SearchBox.propTypes = {
     searchOptions: PropTypes.objectOf(PropTypes.any).isRequired,
     minNumbOfChars: PropTypes.number,
     getFormattedResult: PropTypes.func.isRequired,
-    getResults: PropTypes.func.isRequired,
     service: PropTypes.func.isRequired,
     placeholder: PropTypes.string,
     autofocus: PropTypes.bool,
@@ -183,6 +180,7 @@ SearchBox.propTypes = {
     onResultSelect: PropTypes.func,
     onResultChoose: PropTypes.func,
     onResultsFetch: PropTypes.func,
+    onChange: PropTypes.func,
     components: customProps.components,
 };
 

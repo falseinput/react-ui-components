@@ -10,7 +10,6 @@ import SearchBox from '../src/index';
 const serviceMock = jest.fn();
 
 const commonProps = {
-    getResults: (response) => response.results,
     getFormattedResult: () => 'formattedResult',
     service: serviceMock,
     components: {
@@ -47,9 +46,7 @@ describe('SearchBox: props', () => {
 });
 
 describe('SearchBox: events', () => {
-    const expectedResponse = {
-        results: [],
-    };
+    const expectedResponse = [];
     beforeEach(() => {
         serviceMock.mockReset();
         serviceMock.mockReturnValueOnce(Promise.resolve(expectedResponse));
@@ -119,59 +116,57 @@ describe('SearchBox: events', () => {
 });
 
 describe('SearchBox: events and callbacks', () => {
-    const expectedResponse = {
-        results: [
-            {
-                type: 'POI',
-                id: 'KZ/POI/p0/239681',
-                score: 3.41131,
-                info: 'search: ta: 398009000167979-KZ',
-                poi: {
-                    name: 'Алматы Международный Аэропорт',
-                },
-                address: {
-                    municipalitySubdivision: 'Almaty',
-                    municipality: 'Турксибский Район',
-                    countrySecondarySubdivision: 'Almaty City',
-                    countrySubdivision: 'Алматы',
-                    countryCode: 'KZ',
-                    country: 'Kazakhstan',
-                    countryCodeISO3: 'KAZ',
-                    freeformAddress: 'Турксибский Район Almaty Almaty City, Алматы',
-                },
+    const expectedResponse = [
+        {
+            type: 'POI',
+            id: 'KZ/POI/p0/239681',
+            score: 3.41131,
+            info: 'search: ta: 398009000167979-KZ',
+            poi: {
+                name: 'Алматы Международный Аэропорт',
             },
-            {
-                type: 'Geography',
-                id: 'IT/GEO/p0/21544',
-                score: 2.39174,
-                entityType: 'Municipality',
-                address: {
-                    municipality: 'Ala',
-                    countrySecondarySubdivision: 'Trento',
-                    countrySubdivision: 'Trentino-South Tyrol',
-                    countryCode: 'IT',
-                    country: 'Italy',
-                    countryCodeISO3: 'ITA',
-                    freeformAddress: 'Ala',
-                },
+            address: {
+                municipalitySubdivision: 'Almaty',
+                municipality: 'Турксибский Район',
+                countrySecondarySubdivision: 'Almaty City',
+                countrySubdivision: 'Алматы',
+                countryCode: 'KZ',
+                country: 'Kazakhstan',
+                countryCodeISO3: 'KAZ',
+                freeformAddress: 'Турксибский Район Almaty Almaty City, Алматы',
             },
-            {
-                type: 'Geography',
-                id: 'IT/GEO/p0/1023',
-                score: 2.33668,
-                entityType: 'Municipality',
-                address: {
-                    municipality: 'Ala di Stura',
-                    countrySecondarySubdivision: 'Turin',
-                    countrySubdivision: 'Piedmont',
-                    countryCode: 'IT',
-                    country: 'Italy',
-                    countryCodeISO3: 'ITA',
-                    freeformAddress: 'Ala di Stura',
-                },
+        },
+        {
+            type: 'Geography',
+            id: 'IT/GEO/p0/21544',
+            score: 2.39174,
+            entityType: 'Municipality',
+            address: {
+                municipality: 'Ala',
+                countrySecondarySubdivision: 'Trento',
+                countrySubdivision: 'Trentino-South Tyrol',
+                countryCode: 'IT',
+                country: 'Italy',
+                countryCodeISO3: 'ITA',
+                freeformAddress: 'Ala',
             },
-        ],
-    };
+        },
+        {
+            type: 'Geography',
+            id: 'IT/GEO/p0/1023',
+            score: 2.33668,
+            entityType: 'Municipality',
+            address: {
+                municipality: 'Ala di Stura',
+                countrySecondarySubdivision: 'Turin',
+                countrySubdivision: 'Piedmont',
+                countryCode: 'IT',
+                country: 'Italy',
+                countryCodeISO3: 'ITA',
+                freeformAddress: 'Ala di Stura',
+            },
+        },
+    ];
     beforeEach(() => {
         serviceMock.mockReset();
     });
@@ -214,7 +209,7 @@ describe('SearchBox: events and callbacks', () => {
             fireEvent.click(results[0]);
         });
 
-        expect(onResultChoose).toHaveBeenCalledWith(expectedResponse.results[0]);
+        expect(onResultChoose).toHaveBeenCalledWith(expectedResponse[0]);
     });
 
     test('should call onResultChoose callback when result element is clicked (by pressing enter)', async () => {
@@ -236,7 +231,7 @@ describe('SearchBox: events and callbacks', () => {
             fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
         });
 
-        expect(onResultChoose).toHaveBeenCalledWith(expectedResponse.results[0]);
+        expect(onResultChoose).toHaveBeenCalledWith(expectedResponse[0]);
     });
 
     test('should call onResultSelect callback when result element is selected', async () => {
@@ -260,29 +255,27 @@ describe('SearchBox: events and callbacks', () => {
             fireEvent.keyDown(input, { key: 'Arrow up', keyCode: 38 });
         });
 
-        expect(onResultSelect).toHaveBeenCalledWith(expectedResponse.results[1]);
-        expect(onResultSelect).toHaveBeenCalledWith(expectedResponse.results[0]);
+        expect(onResultSelect).toHaveBeenCalledWith(expectedResponse[1]);
+        expect(onResultSelect).toHaveBeenCalledWith(expectedResponse[0]);
     });
 
     test('should call onResultChoose callback when search is triggered manually', async () => {
         serviceMock.mockReturnValueOnce(Promise.resolve(expectedResponse));
-        const manuallyTriggeredCallResponse = {
-            results: [{
-                type: 'Geography',
-                id: 'IT/GEO/p0/21544',
-                score: 2.39174,
-                entityType: 'Municipality',
-                address: {
-                    municipality: 'Ala',
-                    countrySecondarySubdivision: 'Trento',
-                    countrySubdivision: 'Trentino-South Tyrol',
-                    countryCode: 'IT',
-                    country: 'Italy',
-                    countryCodeISO3: 'ITA',
-                    freeformAddress: 'Ala',
-                },
-            }],
-        };
+        const manuallyTriggeredCallResponse = [{
+            type: 'Geography',
+            id: 'IT/GEO/p0/21544',
+            score: 2.39174,
+            entityType: 'Municipality',
+            address: {
+                municipality: 'Ala',
+                countrySecondarySubdivision: 'Trento',
+                countrySubdivision: 'Trentino-South Tyrol',
+                countryCode: 'IT',
+                country: 'Italy',
+                countryCodeISO3: 'ITA',
+                freeformAddress: 'Ala',
+            },
+        }];
         serviceMock.mockReturnValueOnce(Promise.resolve(manuallyTriggeredCallResponse));
 
         const onResultChoose = jest.fn();
@@ -302,7 +295,7 @@ describe('SearchBox: events and callbacks', () => {
         });
 
         expect(serviceMock).toHaveBeenCalledTimes(2);
-        expect(onResultChoose).toHaveBeenCalledWith(manuallyTriggeredCallResponse.results[0]);
+        expect(onResultChoose).toHaveBeenCalledWith(manuallyTriggeredCallResponse[0]);
     });
 
 
@@ -377,7 +370,7 @@ describe('SearchBox: events and callbacks', () => {
 
 
     test('should not show results if no results were returned from api', async () => {
-        const currentExpectedResponse = { results: [] };
+        const currentExpectedResponse = [];
         serviceMock.mockReturnValueOnce(Promise.resolve(currentExpectedResponse));
 
         let input;
@@ -403,59 +396,57 @@ describe('SearchBox: events and callbacks', () => {
     });
 
     describe('TomtomReactSearchbox: custom components', () => {
-        const expectedResponse = {
-            results: [
-                {
-                    type: 'POI',
-                    id: 'KZ/POI/p0/239681',
-                    score: 3.41131,
-                    info: 'search: ta: 398009000167979-KZ',
-                    poi: {
-                        name: 'Алматы Международный Аэропорт',
-                    },
-                    address: {
-                        municipalitySubdivision: 'Almaty',
-                        municipality: 'Турксибский Район',
-                        countrySecondarySubdivision: 'Almaty City',
-                        countrySubdivision: 'Алматы',
-                        countryCode: 'KZ',
-                        country: 'Kazakhstan',
-                        countryCodeISO3: 'KAZ',
-                        freeformAddress: 'Турксибский Район Almaty Almaty City, Алматы',
-                    },
+        const expectedResponse = [
+            {
+                type: 'POI',
+                id: 'KZ/POI/p0/239681',
+                score: 3.41131,
+                info: 'search: ta: 398009000167979-KZ',
+                poi: {
+                    name: 'Алматы Международный Аэропорт',
                 },
-                {
-                    type: 'Geography',
-                    id: 'IT/GEO/p0/21544',
-                    score: 2.39174,
-                    entityType: 'Municipality',
-                    address: {
-                        municipality: 'Ala',
-                        countrySecondarySubdivision: 'Trento',
-                        countrySubdivision: 'Trentino-South Tyrol',
-                        countryCode: 'IT',
-                        country: 'Italy',
-                        countryCodeISO3: 'ITA',
-                        freeformAddress: 'Ala',
-                    },
+                address: {
+                    municipalitySubdivision: 'Almaty',
+                    municipality: 'Турксибский Район',
+                    countrySecondarySubdivision: 'Almaty City',
+                    countrySubdivision: 'Алматы',
+                    countryCode: 'KZ',
+                    country: 'Kazakhstan',
+                    countryCodeISO3: 'KAZ',
+                    freeformAddress: 'Турксибский Район Almaty Almaty City, Алматы',
                 },
-                {
-                    type: 'Geography',
-                    id: 'IT/GEO/p0/1023',
-                    score: 2.33668,
-                    entityType: 'Municipality',
-                    address: {
-                        municipality: 'Ala di Stura',
-                        countrySecondarySubdivision: 'Turin',
-                        countrySubdivision: 'Piedmont',
-                        countryCode: 'IT',
-                        country: 'Italy',
-                        countryCodeISO3: 'ITA',
-                        freeformAddress: 'Ala di Stura',
-                    },
+            },
+            {
+                type: 'Geography',
+                id: 'IT/GEO/p0/21544',
+                score: 2.39174,
+                entityType: 'Municipality',
+                address: {
+                    municipality: 'Ala',
+                    countrySecondarySubdivision: 'Trento',
+                    countrySubdivision: 'Trentino-South Tyrol',
+                    countryCode: 'IT',
+                    country: 'Italy',
+                    countryCodeISO3: 'ITA',
+                    freeformAddress: 'Ala',
                 },
-            ],
-        };
+            },
+            {
+                type: 'Geography',
+                id: 'IT/GEO/p0/1023',
+                score: 2.33668,
+                entityType: 'Municipality',
+                address: {
+                    municipality: 'Ala di Stura',
+                    countrySecondarySubdivision: 'Turin',
+                    countrySubdivision: 'Piedmont',
+                    countryCode: 'IT',
+                    country: 'Italy',
+                    countryCodeISO3: 'ITA',
+                    freeformAddress: 'Ala di Stura',
+                },
+            },
+        ];
         beforeEach(() => {
             serviceMock.mockReset();
         });
@@ -520,17 +511,17 @@ describe('SearchBox: events and callbacks', () => {
             });
 
             expect(CustomResult).toBeCalledWith({
-                result: expectedResponse.results[0],
+                result: expectedResponse[0],
                 isSelected: expect.any(Boolean),
                 onResultClick: expect.any(Function),
             }, {});
             expect(CustomResult).toBeCalledWith({
-                result: expectedResponse.results[1],
+                result: expectedResponse[1],
                 isSelected: expect.any(Boolean),
                 onResultClick: expect.any(Function),
             }, {});
             expect(CustomResult).toBeCalledWith({
-                result: expectedResponse.results[2],
+                result: expectedResponse[2],
                 isSelected: expect.any(Boolean),
                 onResultClick: expect.any(Function),
             }, {});

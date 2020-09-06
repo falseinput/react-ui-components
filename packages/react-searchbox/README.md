@@ -27,10 +27,6 @@ const Example = (props) =>
 
 ## Props
 
-### Common
-
-Props valid for both providers and base component.
-
 * searchOptions `{Object}`
 * [placeholder] `{String}`
 * [autofocus] `{Boolean}`
@@ -39,28 +35,22 @@ Props valid for both providers and base component.
 * [onResultSelect] `{Function}`
 * [onResultChoose] `{Function}`
 * [onResultsFetch] `{Function}`
+* [onChange] `{Function}`
 
-
-### Advanced
-
-Props only valid for base component.
-* getResults `{Function}`
-* getFormattedResult `{Function}`
-* service `{Function}`
 
 ## Providers
 
 This package exposes already ready to use components.
 
-### Tomtom
+### Tomtom Fuzzy Search
 
-This component wraps [Tomtom Fuzzy Search service](https://developer.tomtom.com/search-api/search-api-documentation-search/fuzzy-search).
+This component wraps [Tomtom Fuzzy Search service](https://developer.tomtom.com/search-api/search-api-documentation-search/fuzzy-search). You will need to provide your own [API key](https://developer.tomtom.com/how-to-get-tomtom-api-key) to make it work.
 
 ```jsx
-import TomtomSearchbox from '@falseinput/react-searchbox/tomtom';
+import SearchBox from '@falseinput/react-searchbox/tomtom';
 
 const Example = () =>
-    <TomtomSearchbox
+    <SearchBox
         onResultChoose={(result) => console.log(result)}
         searchOptions={{
             key: '<your-api-key>',
@@ -87,3 +77,35 @@ Use `wrapperClassName` prop to pass custom class name to container div. Then you
         </div>
     </div>
 ```
+
+## Components API
+
+You can use `components` prop to override internal components of the SearchBox. You can also access original ones by importing them as shown in this example.
+```jsx
+import Searchbox, {
+    components
+  } from '@falseinput/react-searchbox/tomtom';
+
+  function CustomResult(props) {
+    return (
+      <div
+        className={`my-result ${props.isSelected ? '-selected' : ''}`}>
+        <div className="icon">❤</div>
+        <components.Result {...props} />
+      </div>
+    );
+  }
+
+  <Searchbox
+    components={{
+        Result: CustomResult
+    }}
+    searchOptions={{
+        key: '<your-api-key>',
+        language: 'en-Gb',
+        limit: 5,
+        typeahead: true,
+        categorySet: '7315'
+    }} />
+  </div>
+  ```

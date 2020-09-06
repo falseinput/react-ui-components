@@ -42,7 +42,7 @@ function InputWrapper({
                 onKeyDown={onKeyDown}
                 onBlur={onBlur}
                 value={value}
-                onChange={(event) => onChange(event.target.value)}
+                onChange={onChange}
             />
             { value && components.Clear && <components.Clear onClear={onClear} /> }
         </div>
