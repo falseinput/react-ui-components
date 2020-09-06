@@ -1,7 +1,7 @@
 {
-  "name": "@falseinput/react-searchbox",
-  "version": "0.1.0",
-  "description": "Powerful and customizable searchbox component for your react application.",
+  "name": "tomtom-react-searchbox",
+  "version": "0.2.0",
+  "description": "Customizable searchbox component powered by Tomtom search for your React application.",
   "main": "dist/react-searchbox.js",
   "style": "dist/react-searchbox.css",
   "scripts": {
@@ -56,7 +56,8 @@
     "rollup": "1.27.13",
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-node-resolve": "5.2.0",
-    "rollup-plugin-postcss": "2.0.3"
+    "rollup-plugin-postcss": "2.0.3",
+    "rollup-plugin-terser": "7.0.2"
   },
   "peerDependencies": {
     "prop-types": "15.x",

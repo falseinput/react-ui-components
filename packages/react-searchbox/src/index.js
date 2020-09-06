@@ -1,7 +1,6 @@
-import SearchBox from './SearchBox';
-import components from './components/components';
-
 import './style.css';
+
+import SearchBox, { components } from './providers/tomtom/index';
 
 export default SearchBox;
 export { components };

@@ -4,7 +4,8 @@ import { tomtomFuzzySearchSearchService } from './api/services';
 import Result from './components/Result';
 import * as formatters from './formatters';
 import * as customProps from '../../customProps';
-import SearchBox, { components as defaultComponents } from '../../index';
+import SearchBox from '../../SearchBox';
+import * as defaultComponents from '../../components/components';
 
 export const components = { Result, ...defaultComponents };
 

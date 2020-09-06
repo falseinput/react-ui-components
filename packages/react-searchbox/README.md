@@ -1,27 +1,32 @@
-# @falseinput/react-searchbox
+# tomtom-react-searchbox
+
+Customizable searchbox component powered by Tomtom search for your React application.
+
 [![build](https://img.shields.io/circleci/build/github/falseinput/react-ui-components/master
 )](https://circleci.com/gh/falseinput/react-ui-components)
 [![coverage](https://img.shields.io/codecov/c/github/falseinput/react-ui-components)](https://codecov.io/gh/falseinput/react-ui-components)
 
-Powerful and customizable searchbox component for your react application.
 
-This is package provides low level base component which you can use to create your own wrapper component using search API of your choice.
-For your convenience you may use one of the [already wrapped components](#providers).
+This component wraps [Tomtom Fuzzy Search service](https://developer.tomtom.com/search-api/search-api-documentation-search/fuzzy-search). You will need to provide your own [API key](https://developer.tomtom.com/how-to-get-tomtom-api-key) to make it work.
 
 ## Installation
 
 ```
-npm i --save @falseinput/react-searchbox
+npm i --save tomtom-react-searchbox
 ```
 
-## Usage
-
 ```jsx
-import ReactSearchbox from '@falseinput/react-searchbox';
+import SearchBox from 'tomtom-react-searchbox';
 
-const Example = (props) =>
-    <ReactSearchbox
-        {...props}
+const Example = () =>
+    <SearchBox
+        onResultChoose={(result) => console.log(result)}
+        searchOptions={{
+            key: '<your-api-key>',
+            language: 'en-Gb',
+            limit: 5,
+            typeahead: true
+        }}
     />;
 ```
 
@@ -38,29 +43,6 @@ const Example = (props) =>
 * [onChange] `{Function}`
 
 
-## Providers
-
-This package exposes already ready to use components.
-
-### Tomtom Fuzzy Search
-
-This component wraps [Tomtom Fuzzy Search service](https://developer.tomtom.com/search-api/search-api-documentation-search/fuzzy-search). You will need to provide your own [API key](https://developer.tomtom.com/how-to-get-tomtom-api-key) to make it work.
-
-```jsx
-import SearchBox from '@falseinput/react-searchbox/tomtom';
-
-const Example = () =>
-    <SearchBox
-        onResultChoose={(result) => console.log(result)}
-        searchOptions={{
-            key: '<your-api-key>',
-            language: 'en-Gb',
-            limit: 5,
-            typeahead: true
-        }}
-    />;
-
-```
 ## Styling
 
 Use `wrapperClassName` prop to pass custom class name to container div. Then you can override css classes. The structure looks like this:
@@ -84,7 +66,7 @@ You can use `components` prop to override internal components of the SearchBox. 
 ```jsx
 import Searchbox, {
     components
-  } from '@falseinput/react-searchbox/tomtom';
+  } from 'tomtom-react-searchbox';
 
   function CustomResult(props) {
     return (
