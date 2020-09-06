@@ -5,6 +5,7 @@ const postcss = require('rollup-plugin-postcss');
 const postcssNested = require('postcss-nested');
 const svgr = require('@svgr/rollup').default;
 const postcssVariables = require('postcss-css-variables');
+const { terser } = require('rollup-plugin-terser');
 
 const globals = {
     'prop-types': 'PropTypes',
@@ -17,6 +18,7 @@ const commonConfig = {
         babel({ exclude: ['node_modules/**'], runtimeHelpers: false }),
         resolve(),
         commonjs(),
+        terser(),
         postcss({
             plugins: [
                 postcssVariables,
