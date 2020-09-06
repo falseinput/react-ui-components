@@ -1,9 +1,9 @@
 {
   "name": "tomtom-react-searchbox",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Customizable searchbox component powered by Tomtom search for your React application.",
-  "main": "dist/react-searchbox.js",
-  "style": "dist/react-searchbox.css",
+  "main": "dist/index.js",
+  "style": "dist/index.css",
   "scripts": {
     "start": "rollup -c rollup.config.js --watch",
     "build": "rollup -c rollup.config.js",
